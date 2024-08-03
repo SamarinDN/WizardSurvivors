@@ -39,6 +39,15 @@ namespace Presets.Inputs
                     ""initialStateCheck"": true
                 },
                 {
+                    ""name"": ""Rotate"",
+                    ""type"": ""Value"",
+                    ""id"": ""2f9682c1-765c-4da3-bda1-4eb79384ea45"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
                     ""name"": ""CastSpell"",
                     ""type"": ""Button"",
                     ""id"": ""6513f7be-9271-417a-ad8e-9e2f457cb296"",
@@ -101,28 +110,6 @@ namespace Presets.Inputs
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""left"",
-                    ""id"": ""d5be5112-e328-476e-936d-8f7341b85408"",
-                    ""path"": ""<Keyboard>/leftArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""right"",
-                    ""id"": ""c267aa0b-9682-432e-b691-f185fa8c6f20"",
-                    ""path"": ""<Keyboard>/rightArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
                     ""name"": """",
                     ""id"": ""f53d0968-027b-437e-b39b-6699e34df474"",
                     ""path"": ""<Keyboard>/x"",
@@ -154,6 +141,39 @@ namespace Presets.Inputs
                     ""action"": ""SelectNextSpell"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Arrows"",
+                    ""id"": ""0822acaa-cf51-4953-9f2a-3c047d87afb5"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Rotate"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""448732ea-fa2d-4450-956c-c7acf4238c1f"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Rotate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""13b9459a-22df-4ade-80f4-a0d3a71e4451"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Rotate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -175,6 +195,7 @@ namespace Presets.Inputs
             // Player
             m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
             m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
+            m_Player_Rotate = m_Player.FindAction("Rotate", throwIfNotFound: true);
             m_Player_CastSpell = m_Player.FindAction("CastSpell", throwIfNotFound: true);
             m_Player_SelectPreviousSpell = m_Player.FindAction("SelectPreviousSpell", throwIfNotFound: true);
             m_Player_SelectNextSpell = m_Player.FindAction("SelectNextSpell", throwIfNotFound: true);
@@ -240,6 +261,7 @@ namespace Presets.Inputs
         private readonly InputActionMap m_Player;
         private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
         private readonly InputAction m_Player_Move;
+        private readonly InputAction m_Player_Rotate;
         private readonly InputAction m_Player_CastSpell;
         private readonly InputAction m_Player_SelectPreviousSpell;
         private readonly InputAction m_Player_SelectNextSpell;
@@ -248,6 +270,7 @@ namespace Presets.Inputs
             private @GameplayInputActions m_Wrapper;
             public PlayerActions(@GameplayInputActions wrapper) { m_Wrapper = wrapper; }
             public InputAction @Move => m_Wrapper.m_Player_Move;
+            public InputAction @Rotate => m_Wrapper.m_Player_Rotate;
             public InputAction @CastSpell => m_Wrapper.m_Player_CastSpell;
             public InputAction @SelectPreviousSpell => m_Wrapper.m_Player_SelectPreviousSpell;
             public InputAction @SelectNextSpell => m_Wrapper.m_Player_SelectNextSpell;
@@ -263,6 +286,9 @@ namespace Presets.Inputs
                 @Move.started += instance.OnMove;
                 @Move.performed += instance.OnMove;
                 @Move.canceled += instance.OnMove;
+                @Rotate.started += instance.OnRotate;
+                @Rotate.performed += instance.OnRotate;
+                @Rotate.canceled += instance.OnRotate;
                 @CastSpell.started += instance.OnCastSpell;
                 @CastSpell.performed += instance.OnCastSpell;
                 @CastSpell.canceled += instance.OnCastSpell;
@@ -279,6 +305,9 @@ namespace Presets.Inputs
                 @Move.started -= instance.OnMove;
                 @Move.performed -= instance.OnMove;
                 @Move.canceled -= instance.OnMove;
+                @Rotate.started -= instance.OnRotate;
+                @Rotate.performed -= instance.OnRotate;
+                @Rotate.canceled -= instance.OnRotate;
                 @CastSpell.started -= instance.OnCastSpell;
                 @CastSpell.performed -= instance.OnCastSpell;
                 @CastSpell.canceled -= instance.OnCastSpell;
@@ -317,6 +346,7 @@ namespace Presets.Inputs
         public interface IPlayerActions
         {
             void OnMove(InputAction.CallbackContext context);
+            void OnRotate(InputAction.CallbackContext context);
             void OnCastSpell(InputAction.CallbackContext context);
             void OnSelectPreviousSpell(InputAction.CallbackContext context);
             void OnSelectNextSpell(InputAction.CallbackContext context);

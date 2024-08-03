@@ -12,6 +12,11 @@ namespace Services.InputService
 			Debug.Log($"OnMove: {context.ReadValue<Vector2>()}");
 		}
 
+		public void OnRotate(InputAction.CallbackContext context)
+		{
+			Debug.Log($"OnRotate: {context.ReadValue<Vector2>()}");
+		}
+
 		public void OnCastSpell(InputAction.CallbackContext context)
 		{
 			Debug.Log($"OnCastSpell: {context.ReadValueAsButton()}");
