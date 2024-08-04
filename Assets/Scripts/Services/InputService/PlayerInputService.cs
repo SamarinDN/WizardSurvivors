@@ -35,18 +35,6 @@ namespace Services.InputService
 		public void Initialize()
 		{
 			//TODO: Удалить. Код заглушка для проверки что инпут работает
-			Observable.EveryUpdate()
-				.Select(_ => MoveDirection)
-				.Where(moveDirection => moveDirection.Value != 0)
-				.Subscribe(direction => Debug.Log($"Move: {direction.Value}"))
-				.AddTo(_disposables);
-
-			Observable.EveryUpdate()
-				.Select(_ => RotateDirection)
-				.Where(moveDirection => moveDirection.Value != 0)
-				.Subscribe(direction => Debug.Log($"Rotate: {direction.Value}"))
-				.AddTo(_disposables);
-
 			CastSpell
 				.Subscribe(_ => Debug.Log($"CastSpell"))
 				.AddTo(_disposables);
