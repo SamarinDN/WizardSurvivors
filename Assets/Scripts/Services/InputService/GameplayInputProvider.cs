@@ -1,35 +1,44 @@
 using Presets.Inputs;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Zenject;
 
 namespace Services.InputService
 {
 	[RequireComponent(typeof(PlayerInput))]
-	public class GameplayInputProvider : MonoBehaviour, GameplayInputActions.IPlayerActions
+	public sealed class GameplayInputProvider : MonoBehaviour, GameplayInputActions.IPlayerActions
 	{
+		private IPlayerInputPropertyHolder _playerInputService;
+
+		[Inject]
+		private void Constructor(IPlayerInputPropertyHolder playerInputService)
+		{
+			_playerInputService = playerInputService;
+		}
+
 		public void OnMove(InputAction.CallbackContext context)
 		{
-			Debug.Log($"OnMove: {context.ReadValue<Vector2>()}");
+			_playerInputService.MoveDirectionInternal.Value = context.ReadValue<Vector2>().y;
 		}
 
 		public void OnRotate(InputAction.CallbackContext context)
 		{
-			Debug.Log($"OnRotate: {context.ReadValue<Vector2>()}");
+			_playerInputService.RotateDirectionInternal.Value = context.ReadValue<Vector2>().x;
 		}
 
 		public void OnCastSpell(InputAction.CallbackContext context)
 		{
-			Debug.Log($"OnCastSpell: {context.ReadValueAsButton()}");
+			_playerInputService.CastSpellInternal.Execute();
 		}
 
 		public void OnSelectPreviousSpell(InputAction.CallbackContext context)
 		{
-			Debug.Log($"OnSelectPreviousSpell: {context.ReadValueAsButton()}");
+			_playerInputService.SelectPreviousSpellInternal.Execute();
 		}
 
 		public void OnSelectNextSpell(InputAction.CallbackContext context)
 		{
-			Debug.Log($"OnSelectNextSpell: {context.ReadValueAsButton()}");
+			_playerInputService.SelectNextSpellInternal.Execute();
 		}
 	}
 }
