@@ -38,14 +38,6 @@ namespace Services.InputService
 			CastSpell
 				.Subscribe(_ => Debug.Log($"CastSpell"))
 				.AddTo(_disposables);
-
-			SelectPreviousSpell
-				.Subscribe(_ => Debug.Log($"SelectPreviousSpell"))
-				.AddTo(_disposables);
-
-			SelectNextSpell
-				.Subscribe(_ => Debug.Log($"SelectNextSpell"))
-				.AddTo(_disposables);
 		}
 
 		public void Dispose()
