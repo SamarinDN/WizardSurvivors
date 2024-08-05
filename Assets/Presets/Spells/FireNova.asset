@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0bd8b85554ec4fc7aa563d7cd608644f, type: 3}
   m_Name: FireNova
   m_EditorClassIdentifier: 
-  spellSecondsCooldown: 30
+  spellSecondsCooldown: 3
   spellIcon: {fileID: 21300000, guid: fbcced0c44f4d421c8027330a742ebb1, type: 3}
-  spellDamage: 3
+  spellDamage: 30
   novaSpreadSpeed: 5
   novaMaxRadius: 3
   spellView: {fileID: 7000827040953494301, guid: 8c91ba532f32a428ea826a325297ebcf,
