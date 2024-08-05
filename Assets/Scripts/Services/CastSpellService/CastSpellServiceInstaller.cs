@@ -6,6 +6,7 @@ namespace Services.CastSpellService
 	{
 		public override void InstallBindings()
 		{
+			Container.BindInterfacesTo<CastSpellService>().AsSingle().NonLazy();
 		}
 	}
 }
