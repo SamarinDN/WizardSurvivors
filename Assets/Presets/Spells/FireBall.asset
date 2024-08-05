@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spellSecondsCooldown: 1
   spellIcon: {fileID: 21300000, guid: d7f74c8d233f541a2acf816f4dfe50b8, type: 3}
+  spellView: {fileID: 4930559192016541400, guid: 2c16e9ea250e8425b9dc082d518bbcd0,
+    type: 3}
   spellDamage: 50
   flightSpeed: 20
   flightDistance: 20
-  spellView: {fileID: 6130443542568884224, guid: 2c16e9ea250e8425b9dc082d518bbcd0,
-    type: 3}

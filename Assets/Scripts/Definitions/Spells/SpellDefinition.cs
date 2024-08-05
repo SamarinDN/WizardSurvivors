@@ -12,7 +12,12 @@ namespace Definitions.Spells
 		[SerializeField]
 		private Sprite spellIcon;
 
+		[Header("Spell view")]
+		[SerializeField]
+		private GameObject spellView;
+
 		public float SpellSecondsCooldown => spellSecondsCooldown;
 		public Sprite SpellIcon => spellIcon;
+		public GameObject SpellView => spellView;
 	}
 }

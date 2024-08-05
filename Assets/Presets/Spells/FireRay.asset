@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spellSecondsCooldown: 5
   spellIcon: {fileID: 21300000, guid: e95cc9664cc0c4cc9a974301d8cccc3b, type: 3}
+  spellView: {fileID: 6896602274825408017, guid: 166d50e67610449d88783a08ccd2ca36,
+    type: 3}
   spellDamage: 10
   beamLaunchSpeed: 10
   beamMaxLength: 5
   beamSecondsLifetime: 3.5
-  spellView: {fileID: 5967328690065247123, guid: 166d50e67610449d88783a08ccd2ca36,
-    type: 3}

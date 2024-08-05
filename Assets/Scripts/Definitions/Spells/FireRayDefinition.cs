@@ -1,4 +1,3 @@
-using Gameplay.View.Spells;
 using UnityEngine;
 
 namespace Definitions.Spells
@@ -16,13 +15,8 @@ namespace Definitions.Spells
 		[SerializeField, Min(0f)]
 		private float beamSecondsLifetime;
 
-		[Header("FireRay view")]
-		[SerializeField]
-		private FireRayView spellView;
-
 		public float BeamLaunchSpeed => beamLaunchSpeed;
 		public float BeamMaxLength => beamMaxLength;
 		public float BeamSecondsLifetime => beamSecondsLifetime;
-		public FireRayView SpellView => spellView;
 	}
 }

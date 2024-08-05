@@ -1,4 +1,3 @@
-using Gameplay.View.Spells;
 using UnityEngine;
 
 namespace Definitions.Spells
@@ -13,12 +12,7 @@ namespace Definitions.Spells
 		[SerializeField, Min(0f)]
 		private float novaMaxRadius;
 
-		[Header("FireNova view")]
-		[SerializeField]
-		private FireNovaView spellView;
-
 		public float NovaSpreadSpeed => novaSpreadSpeed;
 		public float NovaMaxRadius => novaMaxRadius;
-		public FireNovaView SpellView => spellView;
 	}
 }
