@@ -1,0 +1,16 @@
+{
+    "name": "Definitions.Spells",
+    "rootNamespace": "",
+    "references": [
+        "GUID:2a8948dc4a4924c768bd030f2ed91a05"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
