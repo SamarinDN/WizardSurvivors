@@ -3,6 +3,7 @@ using JetBrains.Annotations;
 using Services.InputService;
 using Services.SelectSpellService;
 using UniRx;
+using UnityEngine;
 using Zenject;
 
 namespace Services.CastSpellService
@@ -33,7 +34,7 @@ namespace Services.CastSpellService
 
 		private void TryCastSpell(Unit _)
 		{
-			//TODO: Необходимо реализовать логику каста заклинаний
+			Debug.Log($"TryCastSpellCast Spell: {_selectSpellService.AvailableSpells[0].name}");
 		}
 	}
 }
