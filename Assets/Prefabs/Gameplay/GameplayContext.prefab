@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8810309753986733610}
   - component: {fileID: -3437214623692067871}
   - component: {fileID: 1640341555068372536}
+  - component: {fileID: 8997243315184025728}
   m_Layer: 0
   m_Name: GameplayContext
   m_TagString: Untagged
@@ -50,6 +51,7 @@ MonoBehaviour:
   _monoInstallers:
   - {fileID: -3437214623692067871}
   - {fileID: 1640341555068372536}
+  - {fileID: 8997243315184025728}
   _installerPrefabs: []
   _autoRun: 1
   OnPreInstall:
@@ -91,3 +93,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e25b413eb1254bf2b0926a32ada12600, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8997243315184025728
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7115521432345799643}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a96fadf589a440da16ba8fcacbb0f6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spells:
+  - {fileID: 11400000, guid: 1aba43a6d508d4ffa92485d27d2a3581, type: 2}
+  - {fileID: 11400000, guid: f11166b8943c84c6eb8a31c0ec611f97, type: 2}
+  - {fileID: 11400000, guid: 8f3c9225a08a34ce9af1e7d3cc04b273, type: 2}
