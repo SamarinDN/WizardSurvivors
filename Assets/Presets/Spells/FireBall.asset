@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: FireBall
   m_EditorClassIdentifier: 
   spellSecondsCooldown: 10
+  spellIcon: {fileID: 21300000, guid: d7f74c8d233f541a2acf816f4dfe50b8, type: 3}
   spellDamage: 5
   flightSpeed: 20
   flightDistance: 20

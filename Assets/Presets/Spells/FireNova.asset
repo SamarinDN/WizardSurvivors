@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: FireNova
   m_EditorClassIdentifier: 
   spellSecondsCooldown: 30
+  spellIcon: {fileID: 21300000, guid: fbcced0c44f4d421c8027330a742ebb1, type: 3}
   spellDamage: 3
   novaSpreadSpeed: 5
   novaMaxRadius: 3

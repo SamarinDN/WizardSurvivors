@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: FireRay
   m_EditorClassIdentifier: 
   spellSecondsCooldown: 50
+  spellIcon: {fileID: 21300000, guid: e95cc9664cc0c4cc9a974301d8cccc3b, type: 3}
   spellDamage: 1
   beamLaunchSpeed: 10
   beamMaxLength: 5
