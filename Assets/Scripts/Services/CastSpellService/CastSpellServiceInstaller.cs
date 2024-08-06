@@ -1,4 +1,5 @@
 using Definitions.Spells;
+using UniRx;
 using UnityEngine;
 using Zenject;
 
@@ -42,7 +43,7 @@ namespace Services.CastSpellService
 		private static void InstallSpell(DiContainer subContainer)
 		{
 			subContainer.Bind<SpellGameObjectPoolableFacade>().FromNewComponentOnRoot().AsSingle();
-			subContainer.Bind<PoolableManager>().AsSingle();
+			subContainer.Bind<PoolableManager<ReactiveProperty<bool>>>().AsSingle();
 		}
 	}
 }
