@@ -32,7 +32,7 @@ namespace Services.CastSpellService
 
 		private void BindSpellFactory(SpellDefinition spell)
 		{
-			Container.BindFactory<Vector3, SpellGameObjectPoolableFacade, SpellGameObjectPoolableFacade.Factory>()
+			Container.BindFactory<Vector3, Quaternion, SpellGameObjectPoolableFacade, SpellGameObjectPoolableFacade.Factory>()
 				.WithFactoryArguments(spell)
 				.FromMonoPoolableMemoryPool(poolBind => poolBind
 					.FromSubContainerResolve()
@@ -45,6 +45,7 @@ namespace Services.CastSpellService
 			subContainer.Bind<SpellGameObjectPoolableFacade>().FromNewComponentOnRoot().AsSingle();
 			subContainer.Bind<PoolableManager>().AsSingle();
 			subContainer.Bind<CastPositionStateHolder>().AsSingle();
+			subContainer.Bind<CastDirectionStateHolder>().AsSingle();
 			subContainer.Bind<SpellActivityStateHolder>().AsSingle();
 		}
 	}

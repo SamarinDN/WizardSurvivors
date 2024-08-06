@@ -43,7 +43,7 @@ namespace Services.CastSpellService
 		private void TryCastSpell(Unit _)
 		{
 			_spellCastHandler.CastSpell(_selectSpellService.AvailableSpells[0],
-				_playerMovementService.PlayerPosition.Value);
+				_playerMovementService.PlayerPosition.Value, _playerMovementService.PlayerRotation.Value);
 		}
 	}
 }
