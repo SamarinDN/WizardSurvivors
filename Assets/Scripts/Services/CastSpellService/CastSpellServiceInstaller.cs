@@ -6,8 +6,13 @@ namespace Services.CastSpellService
 {
 	public sealed class CastSpellServiceInstaller : MonoInstaller<CastSpellServiceInstaller>
 	{
-		[SerializeField]
-		private SpellBook spellBook;
+		private SpellBook _spellBook;
+
+		[Inject]
+		private void Constructor(SpellBook spellBook)
+		{
+			_spellBook = spellBook;
+		}
 
 		public override void InstallBindings()
 		{
@@ -18,7 +23,7 @@ namespace Services.CastSpellService
 
 		private void BindSpellFactories()
 		{
-			foreach (var spell in spellBook.Spells)
+			foreach (var spell in _spellBook.Spells)
 			{
 				BindSpellFactory(spell);
 			}
