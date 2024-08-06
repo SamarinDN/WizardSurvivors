@@ -9,30 +9,30 @@ namespace Services.CastSpellService
 {
 	internal sealed class SpellGameObjectPoolableFacade : MonoBehaviour, IPoolable<Vector3, IMemoryPool>, IDisposable
 	{
-		private PoolableManager<ReactiveProperty<bool>> _poolableManager;
+		private PoolableManager _poolableManager;
 		private IMemoryPool _pool;
 
-		private readonly ReactiveProperty<bool> _isActive = new();
+		private ReactiveProperty<bool> _isSpellActive;
 
 		[Inject]
-		private void Constructor(PoolableManager<ReactiveProperty<bool>> poolableManager)
+		private void Constructor(PoolableManager poolableManager, ReactiveProperty<bool> isSpellActive)
 		{
-			_isActive.Value = true;
+			_isSpellActive = isSpellActive;
 			_poolableManager = poolableManager;
-			_isActive.Where(isActive => isActive == false).Subscribe(_ => DespawnFromPool());
+			_isSpellActive.Where(isActive => isActive == false).Subscribe(_ => DespawnFromPool());
 		}
 
 		public void OnSpawned(Vector3 casterPosition, IMemoryPool pool)
 		{
-			_isActive.Value = true;
+			_isSpellActive.Value = true;
 			_pool = pool;
 			transform.position = casterPosition;
-			_poolableManager.TriggerOnSpawned(_isActive);
+			_poolableManager.TriggerOnSpawned();
 		}
 
 		public void OnDespawned()
 		{
-			_isActive.Value = false;
+			_isSpellActive.Value = false;
 			_pool = null;
 			_poolableManager.TriggerOnDespawned();
 		}
