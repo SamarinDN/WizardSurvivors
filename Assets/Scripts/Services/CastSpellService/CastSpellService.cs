@@ -1,9 +1,9 @@
 using System;
 using JetBrains.Annotations;
 using Services.InputService;
+using Services.PlayerMovementService;
 using Services.SelectSpellService;
 using UniRx;
-using UnityEngine;
 using Zenject;
 
 namespace Services.CastSpellService
@@ -14,12 +14,20 @@ namespace Services.CastSpellService
 		private readonly CompositeDisposable _disposables = new();
 
 		private readonly IPlayerInputService _playerInputService;
+		private readonly IPlayerMovementService _playerMovementService;
 		private readonly ISelectSpellService _selectSpellService;
+		private readonly SpellCastHandler _spellCastHandler;
 
-		public CastSpellService(IPlayerInputService playerInputService, ISelectSpellService selectSpellService)
+		public CastSpellService(
+			IPlayerInputService playerInputService,
+			IPlayerMovementService playerMovementService,
+			ISelectSpellService selectSpellService,
+			SpellCastHandler spellCastHandler)
 		{
 			_playerInputService = playerInputService;
+			_playerMovementService = playerMovementService;
 			_selectSpellService = selectSpellService;
+			_spellCastHandler = spellCastHandler;
 		}
 
 		public void Initialize()
@@ -34,7 +42,8 @@ namespace Services.CastSpellService
 
 		private void TryCastSpell(Unit _)
 		{
-			Debug.Log($"TryCastSpellCast Spell: {_selectSpellService.AvailableSpells[0].name}");
+			_spellCastHandler.CastSpell(_selectSpellService.AvailableSpells[0],
+				_playerMovementService.PlayerPosition.Value);
 		}
 	}
 }
