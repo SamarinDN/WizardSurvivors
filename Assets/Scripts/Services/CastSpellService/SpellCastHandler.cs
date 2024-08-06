@@ -14,7 +14,7 @@ namespace Services.CastSpellService
 			_factories = factories;
 		}
 
-		public void CastSpell(SpellDefinition spellDefinition, Vector3 casterPosition)
+		public void CastSpell(SpellDefinition spellDefinition, Vector3 castPosition)
 		{
 			foreach (var factory in _factories)
 			{
@@ -23,7 +23,7 @@ namespace Services.CastSpellService
 					continue;
 				}
 
-				factory.Create(casterPosition);
+				factory.Create(castPosition);
 				return;
 			}
 		}

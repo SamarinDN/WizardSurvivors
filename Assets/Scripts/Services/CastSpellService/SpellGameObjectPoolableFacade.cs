@@ -27,12 +27,12 @@ namespace Services.CastSpellService
 				.Subscribe(_ => DespawnFromPool());
 		}
 
-		public void OnSpawned(Vector3 casterPosition, IMemoryPool pool)
+		public void OnSpawned(Vector3 castPosition, IMemoryPool pool)
 		{
 			_spellActivityStateHolder.IsSpellActive.Value = true;
-			_castPositionStateHolder.CastPosition.Value = casterPosition;
+			_castPositionStateHolder.CastPosition.Value = castPosition;
 			_pool = pool;
-			transform.position = casterPosition;
+			transform.position = castPosition;
 			_poolableManager.TriggerOnSpawned();
 		}
 
