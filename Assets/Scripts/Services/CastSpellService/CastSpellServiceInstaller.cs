@@ -44,6 +44,7 @@ namespace Services.CastSpellService
 		{
 			subContainer.Bind<SpellGameObjectPoolableFacade>().FromNewComponentOnRoot().AsSingle();
 			subContainer.Bind<PoolableManager>().AsSingle();
+			subContainer.Bind<CastPositionStateHolder>().AsSingle();
 			subContainer.Bind<SpellActivityStateHolder>().AsSingle();
 		}
 	}

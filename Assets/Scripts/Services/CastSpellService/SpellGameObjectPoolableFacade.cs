@@ -14,11 +14,14 @@ namespace Services.CastSpellService
 		private IMemoryPool _pool;
 
 		private SpellActivityStateHolder _spellActivityStateHolder;
+		private CastPositionStateHolder _castPositionStateHolder;
 
 		[Inject]
-		private void Constructor(PoolableManager poolableManager, SpellActivityStateHolder spellActivityStateHolder)
+		private void Constructor(PoolableManager poolableManager, SpellActivityStateHolder spellActivityStateHolder,
+			CastPositionStateHolder castPositionStateHolder)
 		{
 			_spellActivityStateHolder = spellActivityStateHolder;
+			_castPositionStateHolder = castPositionStateHolder;
 			_poolableManager = poolableManager;
 			_spellActivityStateHolder.IsSpellActive.Where(isActive => isActive == false)
 				.Subscribe(_ => DespawnFromPool());
@@ -27,6 +30,7 @@ namespace Services.CastSpellService
 		public void OnSpawned(Vector3 casterPosition, IMemoryPool pool)
 		{
 			_spellActivityStateHolder.IsSpellActive.Value = true;
+			_castPositionStateHolder.CastPosition.Value = casterPosition;
 			_pool = pool;
 			transform.position = casterPosition;
 			_poolableManager.TriggerOnSpawned();
