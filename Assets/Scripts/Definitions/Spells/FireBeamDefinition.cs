@@ -2,10 +2,10 @@ using UnityEngine;
 
 namespace Definitions.Spells
 {
-	[CreateAssetMenu(fileName = "FireRay", menuName = "Definitions/Spells/FireRay")]
-	public sealed class FireRayDefinition : DamagingSpellDefinition
+	[CreateAssetMenu(fileName = "FireBeam", menuName = "Definitions/Spells/FireBeam")]
+	public sealed class FireBeamDefinition : DamagingSpellDefinition
 	{
-		[Header("FireRay stats")]
+		[Header("FireBeam stats")]
 		[SerializeField, Min(0f)]
 		private float beamLaunchSpeed;
 
