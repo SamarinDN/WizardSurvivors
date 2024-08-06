@@ -120,3 +120,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cef80ed98c84fedaa8c5fc6c5a19d73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spellBook: {fileID: 11400000, guid: 532a3d961879841cf8882e2ec97e7c9e, type: 2}

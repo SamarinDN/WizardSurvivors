@@ -7,9 +7,25 @@ namespace Services.CastSpellService
 	[UsedImplicitly]
 	internal sealed class SpellCastHandler
 	{
+		private readonly SpellGameObjectPoolableFacade.Factory[] _factories;
+
+		public SpellCastHandler(SpellGameObjectPoolableFacade.Factory[] factories)
+		{
+			_factories = factories;
+		}
+
 		public void CastSpell(SpellDefinition spellDefinition, Vector3 casterPosition)
 		{
-			Debug.Log($"Try cast spell {spellDefinition.name} at position {casterPosition}");
+			foreach (var factory in _factories)
+			{
+				if (factory.SpellType != spellDefinition)
+				{
+					continue;
+				}
+
+				factory.Create(casterPosition);
+				return;
+			}
 		}
 	}
 }
