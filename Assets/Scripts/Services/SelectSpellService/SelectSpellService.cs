@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using Definitions.Spells;
 using JetBrains.Annotations;
 using Services.InputService;
@@ -18,10 +17,10 @@ namespace Services.SelectSpellService
 
 		public IReadOnlyReactiveCollection<SpellDefinition> AvailableSpells => _availableSpells;
 
-		public SelectSpellService(IPlayerInputService playerInputService, List<SpellDefinition> spells)
+		public SelectSpellService(IPlayerInputService playerInputService, SpellBook spellBook)
 		{
 			_playerInputService = playerInputService;
-			_availableSpells = spells.ToReactiveCollection();
+			_availableSpells = spellBook.Spells.ToReactiveCollection();
 		}
 
 		public void Initialize()
