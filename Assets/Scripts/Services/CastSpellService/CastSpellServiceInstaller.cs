@@ -1,5 +1,5 @@
 using Definitions.Spells;
-using UniRx;
+using Services.CastSpellService.SpellContainer;
 using UnityEngine;
 using Zenject;
 
@@ -44,7 +44,7 @@ namespace Services.CastSpellService
 		{
 			subContainer.Bind<SpellGameObjectPoolableFacade>().FromNewComponentOnRoot().AsSingle();
 			subContainer.Bind<PoolableManager>().AsSingle();
-			subContainer.Bind<ReactiveProperty<bool>>().AsSingle();
+			subContainer.Bind<SpellActivityStateHolder>().AsSingle();
 		}
 	}
 }

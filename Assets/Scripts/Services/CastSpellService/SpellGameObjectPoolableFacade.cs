@@ -1,6 +1,7 @@
 using System;
 using Definitions.Spells;
 using JetBrains.Annotations;
+using Services.CastSpellService.SpellContainer;
 using UniRx;
 using UnityEngine;
 using Zenject;
@@ -12,19 +13,20 @@ namespace Services.CastSpellService
 		private PoolableManager _poolableManager;
 		private IMemoryPool _pool;
 
-		private ReactiveProperty<bool> _isSpellActive;
+		private SpellActivityStateHolder _spellActivityStateHolder;
 
 		[Inject]
-		private void Constructor(PoolableManager poolableManager, ReactiveProperty<bool> isSpellActive)
+		private void Constructor(PoolableManager poolableManager, SpellActivityStateHolder spellActivityStateHolder)
 		{
-			_isSpellActive = isSpellActive;
+			_spellActivityStateHolder = spellActivityStateHolder;
 			_poolableManager = poolableManager;
-			_isSpellActive.Where(isActive => isActive == false).Subscribe(_ => DespawnFromPool());
+			_spellActivityStateHolder.IsSpellActive.Where(isActive => isActive == false)
+				.Subscribe(_ => DespawnFromPool());
 		}
 
 		public void OnSpawned(Vector3 casterPosition, IMemoryPool pool)
 		{
-			_isSpellActive.Value = true;
+			_spellActivityStateHolder.IsSpellActive.Value = true;
 			_pool = pool;
 			transform.position = casterPosition;
 			_poolableManager.TriggerOnSpawned();
@@ -32,7 +34,7 @@ namespace Services.CastSpellService
 
 		public void OnDespawned()
 		{
-			_isSpellActive.Value = false;
+			_spellActivityStateHolder.IsSpellActive.Value = false;
 			_pool = null;
 			_poolableManager.TriggerOnDespawned();
 		}
