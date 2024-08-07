@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Definitions.Spells;
 using Gameplay.SpellLogic;
 using Services.CastSpellService.SpellContainer;
@@ -35,7 +36,8 @@ namespace Services.CastSpellService
 
 		private void BindSpellFactory(SpellDefinition spell)
 		{
-			if (!SpellLogicBinder.SpellBindings.TryGetValue(spell.GetType(), out var spellLogicType))
+			var spellLogicType = SpellLogicBinder.SpellBindings.GetValueOrDefault(spell.GetType());
+			if (spellLogicType == null)
 			{
 				Debug.LogError($"Error binding spell. Logic for spell '{spell}' not found.");
 				return;

@@ -1,15 +1,11 @@
 {
-    "name": "Gameplay.View",
+    "name": "Gameplay.UnitBehaviourLogic",
     "rootNamespace": "",
     "references": [
+        "GUID:455ee281b6fd405fb6e1bd33323504dc",
+        "GUID:3ebc030a91b4d4239bf4437502421b3e",
         "GUID:642719f7a6cb47958897ba68dece8c95",
-        "GUID:560b04d1a97f54a4e82edc0cbbb69285",
-        "GUID:d7dabc0ef16f94d638dc23c9f5c4cdb3",
-        "GUID:02900f7cc0d2642faa7ec133f2ddcc0e",
-        "GUID:6ae30d1d54e3b4165a556c9663ea91de",
-        "GUID:72deea6cb0cb4b27b90938f4a36d5b03",
-        "GUID:a90174e167d914cc78a17daa6b02e3f1",
-        "GUID:455ee281b6fd405fb6e1bd33323504dc"
+        "GUID:560b04d1a97f54a4e82edc0cbbb69285"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
