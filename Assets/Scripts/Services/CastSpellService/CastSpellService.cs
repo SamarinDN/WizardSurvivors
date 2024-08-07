@@ -20,7 +20,13 @@ namespace Services.CastSpellService
 		private readonly SpellCastHandler _spellCastHandler;
 
 		private readonly ReactiveProperty<bool> _isSpellCanBeCast = new();
+		private readonly ReactiveProperty<float> _spellCooldownPercentage = new();
+
+		private float _spellSecondsCooldown;
 		private float _spellCooldownTimer;
+
+		public IReadOnlyReactiveProperty<bool> IsSpellCanBeCast => _isSpellCanBeCast;
+		public IReadOnlyReactiveProperty<float> SpellCooldownPercentage => _spellCooldownPercentage;
 
 		public CastSpellService(
 			IPlayerInputService playerInputService,
@@ -60,7 +66,9 @@ namespace Services.CastSpellService
 
 			_isSpellCanBeCast.Value = false;
 			var spell = _selectSpellService.AvailableSpells[0];
+			_spellSecondsCooldown = spell.SpellSecondsCooldown;
 			_spellCooldownTimer = spell.SpellSecondsCooldown;
+			UpdateSpellCooldownPercentage();
 			_spellCastHandler.CastSpell(spell,
 				_playerMovementService.PlayerPosition.Value, _playerMovementService.PlayerRotation.Value);
 		}
@@ -68,6 +76,7 @@ namespace Services.CastSpellService
 		private void OnCooldownProgress()
 		{
 			_spellCooldownTimer -= Time.deltaTime;
+			UpdateSpellCooldownPercentage();
 			if (_spellCooldownTimer < 0)
 			{
 				ResetCooldown();
@@ -78,6 +87,13 @@ namespace Services.CastSpellService
 		{
 			_isSpellCanBeCast.Value = true;
 			_spellCooldownTimer = 0;
+			_spellCooldownPercentage.Value = 0f;
+		}
+
+		private void UpdateSpellCooldownPercentage()
+		{
+			var percentage = _spellCooldownTimer / _spellSecondsCooldown;
+			_spellCooldownPercentage.Value = float.IsNaN(percentage) ? 0 : _spellCooldownTimer / _spellSecondsCooldown;
 		}
 	}
 }
