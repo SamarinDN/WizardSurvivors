@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Definitions.LevelSettings
 {
-	[CreateAssetMenu(fileName = "LevelSettings", menuName = "Definitions/LevelSettingsDefinition")]
+	[CreateAssetMenu(fileName = "LevelSettings", menuName = "Definitions/LevelSettings")]
 	public sealed class LevelSettingsDefinition : ScriptableObject
 	{
 		[Header("Enemy types on the level")]

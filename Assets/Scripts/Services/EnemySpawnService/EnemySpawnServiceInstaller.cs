@@ -35,11 +35,11 @@ namespace Services.EnemySpawnService
 				.WithFactoryArguments(enemy)
 				.FromMonoPoolableMemoryPool(poolBind => poolBind
 					.FromSubContainerResolve()
-					.ByNewPrefabMethod(_ => enemy.UnitView, container => InstallSpell(container))
+					.ByNewPrefabMethod(_ => enemy.UnitView, container => InstallEnemy(container))
 					.UnderTransformGroup($"[EnemyPool - {enemy.name}]"));
 		}
 
-		private static void InstallSpell(DiContainer subContainer)
+		private static void InstallEnemy(DiContainer subContainer)
 		{
 			subContainer.Bind<EnemyGameObjectPoolableFacade>().FromNewComponentOnRoot().AsSingle();
 			subContainer.Bind<PoolableManager>().AsSingle();
