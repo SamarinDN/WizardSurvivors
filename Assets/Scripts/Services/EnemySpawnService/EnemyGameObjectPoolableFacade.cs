@@ -2,6 +2,7 @@ using System;
 using DataHolders.Transform;
 using Definitions.Enemies;
 using JetBrains.Annotations;
+using UniRx;
 using UnityEngine;
 using Zenject;
 
@@ -28,6 +29,8 @@ namespace Services.EnemySpawnService
 			_positionDataHolder = positionDataHolder;
 			_rotationDataHolder = rotationDataHolder;
 			_poolableManager = poolableManager;
+			_transformActivityDataHolder.IsActive.Where(isActive => isActive == false)
+				.Subscribe(_ => DespawnFromPool());
 		}
 
 		public void OnSpawned(Vector3 position, Quaternion rotation, IMemoryPool pool)
