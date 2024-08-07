@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 856424864fa04d0a93f6d9f144494242, type: 3}
   m_Name: YellowEnemy
   m_EditorClassIdentifier: 
-  unitView: {fileID: 0}
+  unitView: {fileID: 2951479671389784290, guid: 52e2e43dbc05741f590941b553706148,
+    type: 3}
   healthPoints: 20
   movementSpeed: 10
   rotationSpeed: 540

@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 856424864fa04d0a93f6d9f144494242, type: 3}
   m_Name: BigGreenEnemyEnemy
   m_EditorClassIdentifier: 
-  unitView: {fileID: 0}
+  unitView: {fileID: 2951479671389784290, guid: 7723a098ff063412bafad79aa23d5f31,
+    type: 3}
   healthPoints: 500
   movementSpeed: 2
   rotationSpeed: 90
