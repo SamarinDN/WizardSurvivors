@@ -19,6 +19,8 @@ namespace Gameplay.SpellLogic.FireBeam
 
 		private readonly CompositeDisposable _disposables = new();
 
+		private float _beamRawLength;
+
 		private readonly ReactiveProperty<float> _beamLifetime = new();
 		private readonly ReactiveProperty<float> _beamLength = new();
 		private readonly ReactiveProperty<Vector3> _beamPosition = new();
@@ -45,6 +47,7 @@ namespace Gameplay.SpellLogic.FireBeam
 		public void OnSpawned()
 		{
 			_beamLifetime.Value = 0f;
+			_beamRawLength = 0f;
 			_beamLength.Value = 0f;
 			UpdateBeamTransform();
 		}
@@ -72,10 +75,13 @@ namespace Gameplay.SpellLogic.FireBeam
 			UpdateBeamTransform();
 
 			_beamLifetime.Value += Time.deltaTime;
-			if (_beamLength.Value < _fireBeamDefinition.BeamMaxLength)
-			{
-				_beamLength.Value += _fireBeamDefinition.BeamLaunchSpeed * Time.deltaTime;
-			}
+
+			var beamLengthDelta = _fireBeamDefinition.BeamLaunchSpeed * Time.deltaTime;
+			_beamRawLength = _beamLifetime.Value < (_fireBeamDefinition.BeamSecondsLifetime / 2)
+				? _beamRawLength + beamLengthDelta
+				: _beamRawLength - beamLengthDelta;
+			var maxLength = _fireBeamDefinition.BeamMaxLength;
+			_beamLength.Value = _beamRawLength < maxLength ? _beamRawLength : maxLength;
 		}
 
 		private void OnBeamFinish()
