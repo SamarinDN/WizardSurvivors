@@ -4,6 +4,7 @@ using Services.InputService;
 using Services.PlayerMovementService;
 using Services.SelectSpellService;
 using UniRx;
+using UnityEngine;
 using Zenject;
 
 namespace Services.CastSpellService
@@ -17,6 +18,9 @@ namespace Services.CastSpellService
 		private readonly IPlayerMovementService _playerMovementService;
 		private readonly ISelectSpellService _selectSpellService;
 		private readonly SpellCastHandler _spellCastHandler;
+
+		private readonly ReactiveProperty<bool> _isSpellCanBeCast = new();
+		private float _spellCooldownTimer;
 
 		public CastSpellService(
 			IPlayerInputService playerInputService,
@@ -32,7 +36,14 @@ namespace Services.CastSpellService
 
 		public void Initialize()
 		{
+			ResetCooldown();
 			_playerInputService.CastSpell.Subscribe(TryCastSpell).AddTo(_disposables);
+
+			Observable.EveryUpdate()
+				.Select(_ => _isSpellCanBeCast)
+				.Where(isSpellCanBeCast => !isSpellCanBeCast.Value)
+				.Subscribe(_ => OnCooldownProgress())
+				.AddTo(_disposables);
 		}
 
 		public void Dispose()
@@ -42,8 +53,31 @@ namespace Services.CastSpellService
 
 		private void TryCastSpell(Unit _)
 		{
-			_spellCastHandler.CastSpell(_selectSpellService.AvailableSpells[0],
+			if (!_isSpellCanBeCast.Value)
+			{
+				return;
+			}
+
+			_isSpellCanBeCast.Value = false;
+			var spell = _selectSpellService.AvailableSpells[0];
+			_spellCooldownTimer = spell.SpellSecondsCooldown;
+			_spellCastHandler.CastSpell(spell,
 				_playerMovementService.PlayerPosition.Value, _playerMovementService.PlayerRotation.Value);
+		}
+
+		private void OnCooldownProgress()
+		{
+			_spellCooldownTimer -= Time.deltaTime;
+			if (_spellCooldownTimer < 0)
+			{
+				ResetCooldown();
+			}
+		}
+
+		private void ResetCooldown()
+		{
+			_isSpellCanBeCast.Value = true;
+			_spellCooldownTimer = 0;
 		}
 	}
 }
