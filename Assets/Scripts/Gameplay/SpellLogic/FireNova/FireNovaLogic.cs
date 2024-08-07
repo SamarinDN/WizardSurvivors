@@ -9,6 +9,7 @@ using Zenject;
 namespace Gameplay.SpellLogic.FireNova
 {
 	[UsedImplicitly]
+	[SpellDefinitionInfo(typeof(FireNovaDefinition))]
 	public sealed class FireNovaLogic : IFireNovaLogicDataHolder, IPoolable, IInitializable, IDisposable
 	{
 		private FireNovaDefinition _fireNovaDefinition;

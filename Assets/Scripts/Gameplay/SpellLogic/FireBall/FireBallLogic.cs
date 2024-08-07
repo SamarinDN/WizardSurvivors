@@ -9,6 +9,7 @@ using Zenject;
 namespace Gameplay.SpellLogic.FireBall
 {
 	[UsedImplicitly]
+	[SpellDefinitionInfo(typeof(FireBallDefinition))]
 	public sealed class FireBallLogic : IFireBallLogicDataHolder, IPoolable, IInitializable, IDisposable
 	{
 		private FireBallDefinition _fireBallDefinition;

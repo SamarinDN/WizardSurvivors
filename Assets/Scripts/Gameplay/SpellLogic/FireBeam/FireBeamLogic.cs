@@ -10,6 +10,7 @@ using Zenject;
 namespace Gameplay.SpellLogic.FireBeam
 {
 	[UsedImplicitly]
+	[SpellDefinitionInfo(typeof(FireBeamDefinition))]
 	public sealed class FireBeamLogic : IFireBeamLogicDataHolder, IPoolable, IInitializable, IDisposable
 	{
 		private FireBeamDefinition _fireBeamDefinition;

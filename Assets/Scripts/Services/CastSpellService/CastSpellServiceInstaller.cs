@@ -1,4 +1,5 @@
 using Definitions.Spells;
+using Gameplay.SpellLogic;
 using Services.CastSpellService.SpellContainer;
 using UnityEngine;
 using Zenject;
@@ -12,6 +13,7 @@ namespace Services.CastSpellService
 		[Inject]
 		private void Constructor(SpellBook spellBook)
 		{
+			SpellLogicBinder.Reinitialize();
 			_spellBook = spellBook;
 		}
 
@@ -32,16 +34,27 @@ namespace Services.CastSpellService
 
 		private void BindSpellFactory(SpellDefinition spell)
 		{
-			Container.BindFactory<Vector3, Quaternion, SpellGameObjectPoolableFacade, SpellGameObjectPoolableFacade.Factory>()
+			Container
+				.BindFactory<Vector3, Quaternion, SpellGameObjectPoolableFacade,
+					SpellGameObjectPoolableFacade.Factory>()
 				.WithFactoryArguments(spell)
 				.FromMonoPoolableMemoryPool(poolBind => poolBind
 					.FromSubContainerResolve()
-					.ByNewGameObjectMethod(InstallSpell)
+					.ByNewPrefabMethod(_ => spell.SpellView, container => InstallSpell(container, spell))
 					.UnderTransformGroup($"[SpellPool - {spell.name}]"));
 		}
 
-		private static void InstallSpell(DiContainer subContainer)
+		private static void InstallSpell(DiContainer subContainer, SpellDefinition spell)
 		{
+			if (SpellLogicBinder.SpellBindings.TryGetValue(spell.GetType(), out var spellLogicType))
+			{
+				subContainer.BindInterfacesTo(spellLogicType).AsSingle().NonLazy();
+			}
+			else
+			{
+				Debug.LogError($"Error binding spell. Logic for spell '{spell}' not found.");
+			}
+
 			subContainer.Bind<SpellGameObjectPoolableFacade>().FromNewComponentOnRoot().AsSingle();
 			subContainer.Bind<PoolableManager>().AsSingle();
 			subContainer.Bind<CastPositionStateHolder>().AsSingle();
