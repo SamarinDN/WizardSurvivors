@@ -1,6 +1,7 @@
 using DataHolders.Transform;
 using Definitions.Enemies;
 using Definitions.LevelSettings;
+using Gameplay.UnitBehaviourLogic.ApproachingToPlayerLogic;
 using UnityEngine;
 using Zenject;
 
@@ -35,17 +36,21 @@ namespace Services.EnemySpawnService
 				.WithFactoryArguments(enemy)
 				.FromMonoPoolableMemoryPool(poolBind => poolBind
 					.FromSubContainerResolve()
-					.ByNewPrefabMethod(_ => enemy.UnitView, container => InstallEnemy(container))
+					.ByNewPrefabMethod(_ => enemy.UnitView, container => InstallEnemy(container, enemy))
 					.UnderTransformGroup($"[EnemyPool - {enemy.name}]"));
 		}
 
-		private static void InstallEnemy(DiContainer subContainer)
+		private static void InstallEnemy(DiContainer subContainer, UnitDefinition enemy)
 		{
+			subContainer.Bind(enemy.GetType()).FromScriptableObject(enemy).AsSingle();
 			subContainer.Bind<EnemyGameObjectPoolableFacade>().FromNewComponentOnRoot().AsSingle();
 			subContainer.Bind<PoolableManager>().AsSingle();
 			subContainer.Bind<TransformActivityDataHolder>().AsSingle();
 			subContainer.Bind<PositionDataHolder>().AsSingle();
 			subContainer.Bind<RotationDataHolder>().AsSingle();
+			//TODO: В случае когда поведений будет больше одного
+			//необходимо будет сделать систему биндинга UnitDefinition и логики поведения юнитов
+			subContainer.BindInterfacesAndSelfTo<ApproachingToPlayerLogic>().AsSingle().NonLazy();
 		}
 	}
 }
