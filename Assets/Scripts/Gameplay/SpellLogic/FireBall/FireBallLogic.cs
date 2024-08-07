@@ -1,7 +1,7 @@
 using System;
+using DataHolders.Transform;
 using Definitions.Spells;
 using JetBrains.Annotations;
-using Services.CastSpellService.SpellContainer;
 using UniRx;
 using UnityEngine;
 using Zenject;
@@ -13,9 +13,9 @@ namespace Gameplay.SpellLogic.FireBall
 	public sealed class FireBallLogic : IFireBallLogicDataHolder, IPoolable, IInitializable, IDisposable
 	{
 		private FireBallDefinition _fireBallDefinition;
-		private SpellActivityStateHolder _spellActivityStateHolder;
-		private CastPositionStateHolder _castPositionStateHolder;
-		private CastDirectionStateHolder _castDirectionStateHolder;
+		private TransformActivityDataHolder _transformActivityDataHolder;
+		private PositionDataHolder _positionDataHolder;
+		private RotationDataHolder _rotationDataHolder;
 
 		private readonly CompositeDisposable _disposables = new();
 
@@ -26,14 +26,14 @@ namespace Gameplay.SpellLogic.FireBall
 
 		[Inject]
 		private void Constructor(FireBallDefinition fireBallDefinition,
-			SpellActivityStateHolder spellActivityStateHolder,
-			CastPositionStateHolder castPositionStateHolder,
-			CastDirectionStateHolder castDirectionStateHolder)
+			TransformActivityDataHolder transformActivityDataHolder,
+			PositionDataHolder positionDataHolder,
+			RotationDataHolder rotationDataHolder)
 		{
 			_fireBallDefinition = fireBallDefinition;
-			_spellActivityStateHolder = spellActivityStateHolder;
-			_castPositionStateHolder = castPositionStateHolder;
-			_castDirectionStateHolder = castDirectionStateHolder;
+			_transformActivityDataHolder = transformActivityDataHolder;
+			_positionDataHolder = positionDataHolder;
+			_rotationDataHolder = rotationDataHolder;
 		}
 
 		public void OnDespawned()
@@ -42,14 +42,14 @@ namespace Gameplay.SpellLogic.FireBall
 
 		public void OnSpawned()
 		{
-			_fireBallPosition.Value = _castPositionStateHolder.CastPosition.Value;
+			_fireBallPosition.Value = _positionDataHolder.Position.Value;
 			_flownDistance.Value = 0f;
 		}
 
 		public void Initialize()
 		{
 			Observable.EveryUpdate()
-				.Select(_ => _spellActivityStateHolder.IsSpellActive)
+				.Select(_ => _transformActivityDataHolder.IsActive)
 				.Where(isFireBallActive => isFireBallActive.Value)
 				.Subscribe(_ => OnFireBallInFlight())
 				.AddTo(_disposables);
@@ -69,13 +69,13 @@ namespace Gameplay.SpellLogic.FireBall
 			_flownDistance.Value += _fireBallDefinition.FlightSpeed * Time.deltaTime;
 
 			_fireBallPosition.Value =
-				_castPositionStateHolder.CastPosition.Value +
-				_castDirectionStateHolder.CastDirection.Value * Vector3.forward * _flownDistance.Value;
+				_positionDataHolder.Position.Value +
+				_rotationDataHolder.Rotation.Value * Vector3.forward * _flownDistance.Value;
 		}
 
 		private void OnFireBallFlightFinish()
 		{
-			_spellActivityStateHolder.IsSpellActive.Value = false;
+			_transformActivityDataHolder.IsActive.Value = false;
 		}
 	}
 }

@@ -1,4 +1,5 @@
 using System;
+using Definitions.Enemies;
 using JetBrains.Annotations;
 using Services.InputService;
 using Services.LevelBoundsService;
@@ -11,12 +12,9 @@ namespace Services.PlayerMovementService
 	[UsedImplicitly]
 	public sealed class PlayerMovementService : IPlayerMovementService, IInitializable, IDisposable
 	{
-		//TODO: Параметры игрока необходимо вынести из класса
-		private const float PlayerMovementSpeed = 10;
-		private const float PlayerRotationSpeed = 360;
-
 		private readonly IPlayerInputService _playerInputService;
 		private readonly ILevelBoundsProvider _levelBoundsProvider;
+		private readonly PlayerDefinition _playerDefinition;
 
 		private readonly CompositeDisposable _disposables = new();
 
@@ -29,11 +27,12 @@ namespace Services.PlayerMovementService
 		public IReadOnlyReactiveProperty<Quaternion> PlayerRotation => _playerRotation;
 
 		public PlayerMovementService(IPlayerInputService playerInputService,
-			[Inject(Optional = true)]
-			ILevelBoundsProvider levelBoundsProvider)
+			[Inject(Optional = true)] ILevelBoundsProvider levelBoundsProvider,
+			PlayerDefinition playerDefinition)
 		{
 			_playerInputService = playerInputService;
 			_levelBoundsProvider = levelBoundsProvider;
+			_playerDefinition = playerDefinition;
 		}
 
 		public void Initialize()
@@ -58,7 +57,7 @@ namespace Services.PlayerMovementService
 
 		private void Move(float direction)
 		{
-			var moveDirection = new Vector3(0, 0, direction * Time.deltaTime * PlayerMovementSpeed);
+			var moveDirection = new Vector3(0, 0, direction * Time.deltaTime * _playerDefinition.MovementSpeed);
 			var newPosition = _playerPosition.Value + _playerRotation.Value * moveDirection;
 			newPosition = TryBoundPosition(newPosition);
 			_playerPosition.Value = newPosition;
@@ -66,7 +65,8 @@ namespace Services.PlayerMovementService
 
 		private void Rotate(float direction)
 		{
-			var eulerRotation = _playerRotation.Value.eulerAngles.y + direction * Time.deltaTime * PlayerRotationSpeed;
+			var eulerRotation = _playerRotation.Value.eulerAngles.y +
+			                    direction * Time.deltaTime * _playerDefinition.RotationSpeed;
 			_playerRotation.Value = Quaternion.Euler(0, eulerRotation, 0);
 		}
 
