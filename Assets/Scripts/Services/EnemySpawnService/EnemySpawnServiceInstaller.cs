@@ -1,3 +1,4 @@
+using DataHolders.Transform;
 using Definitions.Enemies;
 using Definitions.LevelSettings;
 using UnityEngine;
@@ -42,6 +43,9 @@ namespace Services.EnemySpawnService
 		{
 			subContainer.Bind<EnemyGameObjectPoolableFacade>().FromNewComponentOnRoot().AsSingle();
 			subContainer.Bind<PoolableManager>().AsSingle();
+			subContainer.Bind<TransformActivityDataHolder>().AsSingle();
+			subContainer.Bind<PositionDataHolder>().AsSingle();
+			subContainer.Bind<RotationDataHolder>().AsSingle();
 		}
 	}
 }

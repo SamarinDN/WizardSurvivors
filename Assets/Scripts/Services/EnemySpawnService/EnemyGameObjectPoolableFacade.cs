@@ -1,4 +1,5 @@
 using System;
+using DataHolders.Transform;
 using Definitions.Enemies;
 using JetBrains.Annotations;
 using UnityEngine;
@@ -12,23 +13,38 @@ namespace Services.EnemySpawnService
 		private PoolableManager _poolableManager;
 		private IMemoryPool _pool;
 
+		private TransformActivityDataHolder _transformActivityDataHolder;
+		private PositionDataHolder _positionDataHolder;
+		private RotationDataHolder _rotationDataHolder;
+
 		[Inject]
-		private void Constructor(PoolableManager poolableManager)
+		private void Constructor(
+			PoolableManager poolableManager,
+			TransformActivityDataHolder transformActivityDataHolder,
+			PositionDataHolder positionDataHolder,
+			RotationDataHolder rotationDataHolder)
 		{
+			_transformActivityDataHolder = transformActivityDataHolder;
+			_positionDataHolder = positionDataHolder;
+			_rotationDataHolder = rotationDataHolder;
 			_poolableManager = poolableManager;
 		}
 
-		public void OnSpawned(Vector3 spawnEnemyPosition, Quaternion spawnEnemyDirection, IMemoryPool pool)
+		public void OnSpawned(Vector3 position, Quaternion rotation, IMemoryPool pool)
 		{
+			_transformActivityDataHolder.IsActive.Value = true;
+			_positionDataHolder.Position.Value = position;
+			_rotationDataHolder.Rotation.Value = rotation;
 			_pool = pool;
 			var enemyTransform = transform;
-			enemyTransform.position = spawnEnemyPosition;
-			enemyTransform.rotation = spawnEnemyDirection;
+			enemyTransform.position = position;
+			enemyTransform.rotation = rotation;
 			_poolableManager.TriggerOnSpawned();
 		}
 
 		public void OnDespawned()
 		{
+			_transformActivityDataHolder.IsActive.Value = false;
 			_pool = null;
 			_poolableManager.TriggerOnDespawned();
 		}
