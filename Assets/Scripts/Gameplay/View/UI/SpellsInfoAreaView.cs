@@ -1,3 +1,4 @@
+using Services.CastSpellService;
 using Services.SelectSpellService;
 using UniRx;
 using UnityEngine;
@@ -17,18 +18,24 @@ namespace Gameplay.View.UI
 		[SerializeField]
 		private Image nextSpell;
 
+		[SerializeField]
+		private Image Cooldown;
+
 		private ISelectSpellService _selectSpellService;
+		private ICastSpellService _castSpellService;
 
 		[Inject]
-		private void Constructor(ISelectSpellService selectSpellService)
+		private void Constructor(ISelectSpellService selectSpellService, ICastSpellService castSpellService)
 		{
 			_selectSpellService = selectSpellService;
+			_castSpellService = castSpellService;
 		}
 
 		private void Awake()
 		{
 			RedrawSpellIcons();
-			_selectSpellService.AvailableSpells.ObserveMove().Subscribe(_ => RedrawSpellIcons());
+			_selectSpellService.AvailableSpells.ObserveMove().Subscribe(_ => RedrawSpellIcons()).AddTo(this);
+			_castSpellService.SpellCooldownPercentage.Subscribe(_ => OnCooldownChanged()).AddTo(this);
 		}
 
 		private void RedrawSpellIcons()
@@ -52,6 +59,13 @@ namespace Gameplay.View.UI
 			previousSpell.sprite = spells[^1].SpellIcon;
 			activeSpell.sprite = spells[0].SpellIcon;
 			nextSpell.sprite = spells[1].SpellIcon;
+		}
+
+		private void OnCooldownChanged()
+		{
+			Cooldown.fillAmount = _castSpellService.IsSpellCanBeCast.Value
+				? 0f
+				: _castSpellService.SpellCooldownPercentage.Value;
 		}
 	}
 }
