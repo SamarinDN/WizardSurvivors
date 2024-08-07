@@ -28,17 +28,26 @@ namespace Services.InputService
 
 		public void OnCastSpell(InputAction.CallbackContext context)
 		{
-			_playerInputService.CastSpellInternal.Execute();
+			if (context.performed)
+			{
+				_playerInputService.CastSpellInternal.Execute();
+			}
 		}
 
 		public void OnSelectPreviousSpell(InputAction.CallbackContext context)
 		{
-			_playerInputService.SelectPreviousSpellInternal.Execute();
+			if (context.performed)
+			{
+				_playerInputService.SelectPreviousSpellInternal.Execute();
+			}
 		}
 
 		public void OnSelectNextSpell(InputAction.CallbackContext context)
 		{
-			_playerInputService.SelectNextSpellInternal.Execute();
+			if (context.performed)
+			{
+				_playerInputService.SelectNextSpellInternal.Execute();
+			}
 		}
 	}
 }

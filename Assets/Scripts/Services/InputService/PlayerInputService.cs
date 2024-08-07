@@ -1,15 +1,12 @@
-using System;
 using JetBrains.Annotations;
 using UniRx;
-using UnityEngine;
 using Utility.UniRxExtensions;
-using Zenject;
 
 namespace Services.InputService
 {
 	[UsedImplicitly]
 	internal sealed class PlayerInputService
-		: IPlayerInputPropertyHolder, IPlayerInputService, IInitializable, IDisposable
+		: IPlayerInputPropertyHolder, IPlayerInputService
 	{
 		public ReactiveProperty<float> MoveDirectionInternal { get; } = new();
 		public ReactiveProperty<float> RotateDirectionInternal { get; } = new();
@@ -23,34 +20,11 @@ namespace Services.InputService
 		public ReadOnlyReactiveCommand SelectPreviousSpell { get; }
 		public ReadOnlyReactiveCommand SelectNextSpell { get; }
 
-		private readonly CompositeDisposable _disposables = new();
-
 		public PlayerInputService()
 		{
 			CastSpell = new ReadOnlyReactiveCommand(CastSpellInternal);
 			SelectPreviousSpell = new ReadOnlyReactiveCommand(SelectPreviousSpellInternal);
 			SelectNextSpell = new ReadOnlyReactiveCommand(SelectNextSpellInternal);
-		}
-
-		public void Initialize()
-		{
-			//TODO: Удалить. Код заглушка для проверки что инпут работает
-			CastSpell
-				.Subscribe(_ => Debug.Log($"CastSpell"))
-				.AddTo(_disposables);
-
-			SelectPreviousSpell
-				.Subscribe(_ => Debug.Log($"SelectPreviousSpell"))
-				.AddTo(_disposables);
-
-			SelectNextSpell
-				.Subscribe(_ => Debug.Log($"SelectNextSpell"))
-				.AddTo(_disposables);
-		}
-
-		public void Dispose()
-		{
-			_disposables.Clear();
 		}
 	}
 }

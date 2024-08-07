@@ -3,7 +3,7 @@ using UniRx;
 using UnityEngine;
 using Zenject;
 
-namespace Gameplay.View
+namespace Gameplay.View.Player
 {
 	public sealed class PlayerPositionView : MonoBehaviour
 	{
