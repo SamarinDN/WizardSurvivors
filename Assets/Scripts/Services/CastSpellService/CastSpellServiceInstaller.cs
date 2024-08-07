@@ -1,3 +1,4 @@
+using System;
 using Definitions.Spells;
 using Gameplay.SpellLogic;
 using Services.CastSpellService.SpellContainer;
@@ -34,27 +35,25 @@ namespace Services.CastSpellService
 
 		private void BindSpellFactory(SpellDefinition spell)
 		{
+			if (!SpellLogicBinder.SpellBindings.TryGetValue(spell.GetType(), out var spellLogicType))
+			{
+				Debug.LogError($"Error binding spell. Logic for spell '{spell}' not found.");
+				return;
+			}
+
 			Container
 				.BindFactory<Vector3, Quaternion, SpellGameObjectPoolableFacade,
 					SpellGameObjectPoolableFacade.Factory>()
 				.WithFactoryArguments(spell)
 				.FromMonoPoolableMemoryPool(poolBind => poolBind
 					.FromSubContainerResolve()
-					.ByNewPrefabMethod(_ => spell.SpellView, container => InstallSpell(container, spell))
+					.ByNewPrefabMethod(_ => spell.SpellView, container => InstallSpell(container, spellLogicType))
 					.UnderTransformGroup($"[SpellPool - {spell.name}]"));
 		}
 
-		private static void InstallSpell(DiContainer subContainer, SpellDefinition spell)
+		private static void InstallSpell(DiContainer subContainer, Type spell)
 		{
-			if (SpellLogicBinder.SpellBindings.TryGetValue(spell.GetType(), out var spellLogicType))
-			{
-				subContainer.BindInterfacesTo(spellLogicType).AsSingle().NonLazy();
-			}
-			else
-			{
-				Debug.LogError($"Error binding spell. Logic for spell '{spell}' not found.");
-			}
-
+			subContainer.BindInterfacesTo(spell).AsSingle().NonLazy();
 			subContainer.Bind<SpellGameObjectPoolableFacade>().FromNewComponentOnRoot().AsSingle();
 			subContainer.Bind<PoolableManager>().AsSingle();
 			subContainer.Bind<CastPositionStateHolder>().AsSingle();
