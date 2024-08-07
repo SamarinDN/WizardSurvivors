@@ -526,7 +526,7 @@ GameObject:
   - component: {fileID: 662261770}
   - component: {fileID: 662261769}
   m_Layer: 0
-  m_Name: Groud
+  m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -7,8 +7,8 @@ namespace Services.InputService
 	{
 		public IReadOnlyReactiveProperty<float> MoveDirection { get; }
 		public IReadOnlyReactiveProperty<float> RotateDirection { get; }
-		public ReadOnlyReactiveCommand CastSpell { get; }
-		public ReadOnlyReactiveCommand SelectPreviousSpell { get; }
-		public ReadOnlyReactiveCommand SelectNextSpell { get; }
+		public IReadOnlyReactiveCommand CastSpell { get; }
+		public IReadOnlyReactiveCommand SelectPreviousSpell { get; }
+		public IReadOnlyReactiveCommand SelectNextSpell { get; }
 	}
 }

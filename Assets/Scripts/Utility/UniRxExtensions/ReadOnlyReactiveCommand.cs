@@ -3,7 +3,7 @@ using UniRx;
 
 namespace Utility.UniRxExtensions
 {
-	public sealed class ReadOnlyReactiveCommand : IObservable<Unit>
+	public sealed class ReadOnlyReactiveCommand : IReadOnlyReactiveCommand
 	{
 		private readonly ReactiveCommand _reactiveCommand;
 
