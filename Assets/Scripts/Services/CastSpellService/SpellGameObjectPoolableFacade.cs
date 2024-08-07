@@ -1,47 +1,53 @@
 using System;
+using DataHolders.Transform;
 using Definitions.Spells;
 using JetBrains.Annotations;
-using Services.CastSpellService.SpellContainer;
 using UniRx;
 using UnityEngine;
 using Zenject;
 
 namespace Services.CastSpellService
 {
-	internal sealed class SpellGameObjectPoolableFacade : MonoBehaviour, IPoolable<Vector3, Quaternion, IMemoryPool>, IDisposable
+	internal sealed class SpellGameObjectPoolableFacade : MonoBehaviour,
+		IPoolable<Vector3, Quaternion, IMemoryPool>, IDisposable
 	{
 		private PoolableManager _poolableManager;
 		private IMemoryPool _pool;
 
-		private SpellActivityStateHolder _spellActivityStateHolder;
-		private CastPositionStateHolder _castPositionStateHolder;
-		private CastDirectionStateHolder _castDirectionStateHolder;
+		private TransformActivityDataHolder _transformActivityDataHolder;
+		private PositionDataHolder _positionDataHolder;
+		private RotationDataHolder _rotationDataHolder;
 
 		[Inject]
-		private void Constructor(PoolableManager poolableManager, SpellActivityStateHolder spellActivityStateHolder,
-			CastPositionStateHolder castPositionStateHolder, CastDirectionStateHolder castDirectionStateHolder)
+		private void Constructor(
+			PoolableManager poolableManager,
+			TransformActivityDataHolder transformActivityDataHolder,
+			PositionDataHolder positionDataHolder,
+			RotationDataHolder rotationDataHolder)
 		{
-			_spellActivityStateHolder = spellActivityStateHolder;
-			_castPositionStateHolder = castPositionStateHolder;
-			_castDirectionStateHolder = castDirectionStateHolder;
+			_transformActivityDataHolder = transformActivityDataHolder;
+			_positionDataHolder = positionDataHolder;
+			_rotationDataHolder = rotationDataHolder;
 			_poolableManager = poolableManager;
-			_spellActivityStateHolder.IsSpellActive.Where(isActive => isActive == false)
+			_transformActivityDataHolder.IsActive.Where(isActive => isActive == false)
 				.Subscribe(_ => DespawnFromPool());
 		}
 
-		public void OnSpawned(Vector3 castPosition, Quaternion castDirection, IMemoryPool pool)
+		public void OnSpawned(Vector3 position, Quaternion rotation, IMemoryPool pool)
 		{
-			_spellActivityStateHolder.IsSpellActive.Value = true;
-			_castPositionStateHolder.CastPosition.Value = castPosition;
-			_castDirectionStateHolder.CastDirection.Value = castDirection;
+			_transformActivityDataHolder.IsActive.Value = true;
+			_positionDataHolder.Position.Value = position;
+			_rotationDataHolder.Rotation.Value = rotation;
 			_pool = pool;
-			transform.position = castPosition;
+			var enemyTransform = transform;
+			enemyTransform.position = position;
+			enemyTransform.rotation = rotation;
 			_poolableManager.TriggerOnSpawned();
 		}
 
 		public void OnDespawned()
 		{
-			_spellActivityStateHolder.IsSpellActive.Value = false;
+			_transformActivityDataHolder.IsActive.Value = false;
 			_pool = null;
 			_poolableManager.TriggerOnDespawned();
 		}

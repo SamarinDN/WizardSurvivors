@@ -1,7 +1,7 @@
 using System;
+using DataHolders.Transform;
 using Definitions.Spells;
 using JetBrains.Annotations;
-using Services.CastSpellService.SpellContainer;
 using UniRx;
 using UnityEngine;
 using Zenject;
@@ -13,7 +13,7 @@ namespace Gameplay.SpellLogic.FireNova
 	public sealed class FireNovaLogic : IFireNovaLogicDataHolder, IPoolable, IInitializable, IDisposable
 	{
 		private FireNovaDefinition _fireNovaDefinition;
-		private SpellActivityStateHolder _spellActivityStateHolder;
+		private TransformActivityDataHolder _transformActivityDataHolder;
 
 		private readonly CompositeDisposable _disposables = new();
 
@@ -23,10 +23,10 @@ namespace Gameplay.SpellLogic.FireNova
 
 		[Inject]
 		private void Constructor(FireNovaDefinition fireNovaDefinition,
-			SpellActivityStateHolder spellActivityStateHolder)
+			TransformActivityDataHolder transformActivityDataHolder)
 		{
 			_fireNovaDefinition = fireNovaDefinition;
-			_spellActivityStateHolder = spellActivityStateHolder;
+			_transformActivityDataHolder = transformActivityDataHolder;
 		}
 
 		public void OnDespawned()
@@ -41,7 +41,7 @@ namespace Gameplay.SpellLogic.FireNova
 		public void Initialize()
 		{
 			Observable.EveryUpdate()
-				.Select(_ => _spellActivityStateHolder.IsSpellActive)
+				.Select(_ => _transformActivityDataHolder.IsActive)
 				.Where(isNovaActive => isNovaActive.Value)
 				.Subscribe(_ => OnNovaSpread())
 				.AddTo(_disposables);
@@ -63,7 +63,7 @@ namespace Gameplay.SpellLogic.FireNova
 
 		private void OnNovaEnd()
 		{
-			_spellActivityStateHolder.IsSpellActive.Value = false;
+			_transformActivityDataHolder.IsActive.Value = false;
 		}
 	}
 }

@@ -1,7 +1,7 @@
 using System;
+using DataHolders.Transform;
 using Definitions.Spells;
 using JetBrains.Annotations;
-using Services.CastSpellService.SpellContainer;
 using Services.PlayerMovementService;
 using UniRx;
 using UnityEngine;
@@ -14,7 +14,7 @@ namespace Gameplay.SpellLogic.FireBeam
 	public sealed class FireBeamLogic : IFireBeamLogicDataHolder, IPoolable, IInitializable, IDisposable
 	{
 		private FireBeamDefinition _fireBeamDefinition;
-		private SpellActivityStateHolder _spellActivityStateHolder;
+		private TransformActivityDataHolder _transformActivityDataHolder;
 		private IPlayerMovementService _playerMovementService;
 
 		private readonly CompositeDisposable _disposables = new();
@@ -32,11 +32,11 @@ namespace Gameplay.SpellLogic.FireBeam
 
 		[Inject]
 		private void Constructor(FireBeamDefinition fireBeamDefinition,
-			SpellActivityStateHolder spellActivityStateHolder,
+			TransformActivityDataHolder transformActivityDataHolder,
 			IPlayerMovementService playerMovementService)
 		{
 			_fireBeamDefinition = fireBeamDefinition;
-			_spellActivityStateHolder = spellActivityStateHolder;
+			_transformActivityDataHolder = transformActivityDataHolder;
 			_playerMovementService = playerMovementService;
 		}
 
@@ -55,7 +55,7 @@ namespace Gameplay.SpellLogic.FireBeam
 		public void Initialize()
 		{
 			Observable.EveryUpdate()
-				.Select(_ => _spellActivityStateHolder.IsSpellActive)
+				.Select(_ => _transformActivityDataHolder.IsActive)
 				.Where(isFireBeamActive => isFireBeamActive.Value)
 				.Subscribe(_ => OnBeamGrowing())
 				.AddTo(_disposables);
@@ -86,7 +86,7 @@ namespace Gameplay.SpellLogic.FireBeam
 
 		private void OnBeamFinish()
 		{
-			_spellActivityStateHolder.IsSpellActive.Value = false;
+			_transformActivityDataHolder.IsActive.Value = false;
 		}
 
 		private void UpdateBeamTransform()

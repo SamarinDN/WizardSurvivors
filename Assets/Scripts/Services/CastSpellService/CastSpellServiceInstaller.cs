@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
+using DataHolders.Transform;
 using Definitions.Spells;
 using Gameplay.SpellLogic;
-using Services.CastSpellService.SpellContainer;
 using UnityEngine;
 using Zenject;
 
@@ -58,9 +58,9 @@ namespace Services.CastSpellService
 			subContainer.BindInterfacesTo(spell).AsSingle().NonLazy();
 			subContainer.Bind<SpellGameObjectPoolableFacade>().FromNewComponentOnRoot().AsSingle();
 			subContainer.Bind<PoolableManager>().AsSingle();
-			subContainer.Bind<CastPositionStateHolder>().AsSingle();
-			subContainer.Bind<CastDirectionStateHolder>().AsSingle();
-			subContainer.Bind<SpellActivityStateHolder>().AsSingle();
+			subContainer.Bind<PositionDataHolder>().AsSingle();
+			subContainer.Bind<RotationDataHolder>().AsSingle();
+			subContainer.Bind<TransformActivityDataHolder>().AsSingle();
 		}
 	}
 }
