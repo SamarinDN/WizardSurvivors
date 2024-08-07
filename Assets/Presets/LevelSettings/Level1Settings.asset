@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8663837662e64e8cba0f2e93f45d15a8, type: 3}
+  m_Name: Level1Settings
+  m_EditorClassIdentifier: 
+  availableEnemiesOnLevel:
+  - {fileID: 11400000, guid: 5749b99b404cb4b25b3cd2d01395806b, type: 2}
+  - {fileID: 11400000, guid: da71bb20a85d64ac0b7770699d928adb, type: 2}
+  - {fileID: 11400000, guid: d22ff9418fcd540c5a8e15383b286598, type: 2}
+  - {fileID: 11400000, guid: 5a31544afea4c4c6fa4b7b45e9166677, type: 2}
+  maximumEnemiesCountInLevel: 10
+  spawnEnemiesInterval: 3
