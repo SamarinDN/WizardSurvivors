@@ -63,7 +63,7 @@ namespace Services.CastSpellService
 		}
 
 		[UsedImplicitly]
-		public class Factory : PlaceholderFactory<Vector3, Quaternion, SpellGameObjectPoolableFacade>
+		public sealed class Factory : PlaceholderFactory<Vector3, Quaternion, SpellGameObjectPoolableFacade>
 		{
 			public SpellDefinition SpellType { get; private set; }
 

@@ -1,3 +1,4 @@
+using Definitions.Spells;
 using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
@@ -10,9 +11,12 @@ namespace Gameplay.Collision
 		[SerializeField]
 		private Collider colliderComponent;
 
+		private IDamagingSpellDefinition _damagingSpellDefinition;
+
 		[Inject]
-		private void Constructor()
+		private void Constructor(IDamagingSpellDefinition damagingSpellDefinition)
 		{
+			_damagingSpellDefinition = damagingSpellDefinition;
 		}
 
 		private void Start()
@@ -27,7 +31,7 @@ namespace Gameplay.Collision
 				return;
 			}
 
-			Debug.Log($"Spell {name} provide collision to Enemy");
+			Debug.Log($"Spell {name} provide collision to Enemy. Damage {_damagingSpellDefinition.SpellDamage}");
 			receiver.OnReceiverCollision();
 		}
 	}
