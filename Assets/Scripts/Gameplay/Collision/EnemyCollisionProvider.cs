@@ -1,3 +1,4 @@
+using Definitions.Enemies;
 using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
@@ -10,9 +11,12 @@ namespace Gameplay.Collision
 		[SerializeField]
 		private Collider colliderComponent;
 
+		private SimpleEnemyDefinition _simpleEnemyDefinition;
+
 		[Inject]
-		private void Constructor()
+		private void Constructor(SimpleEnemyDefinition simpleEnemyDefinition)
 		{
+			_simpleEnemyDefinition = simpleEnemyDefinition;
 		}
 
 		private void Start()
@@ -24,8 +28,7 @@ namespace Gameplay.Collision
 		{
 			if (other.TryGetComponent<PlayerCollisionReceiver>(out var receiver))
 			{
-				Debug.Log($"Enemy {name} provide collision to Player");
-				receiver.OnReceiverCollision();
+				receiver.OnReceiverCollision(_simpleEnemyDefinition.Damage);
 			}
 		}
 	}

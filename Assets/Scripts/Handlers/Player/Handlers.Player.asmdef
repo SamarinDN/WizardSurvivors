@@ -1,13 +1,11 @@
 {
-    "name": "Gameplay.Collision",
+    "name": "Handlers.Player",
     "rootNamespace": "",
     "references": [
-        "GUID:560b04d1a97f54a4e82edc0cbbb69285",
-        "GUID:0d8beb7f090555447a6cf5ce9e54dbb4",
-        "GUID:6ae30d1d54e3b4165a556c9663ea91de",
-        "GUID:f5e4878ff13d4b2e8a9da9dcd6d208b3",
+        "GUID:3ebc030a91b4d4239bf4437502421b3e",
         "GUID:f3f5228ff1f04ed69141aa622cb828ea",
-        "GUID:3ebc030a91b4d4239bf4437502421b3e"
+        "GUID:560b04d1a97f54a4e82edc0cbbb69285",
+        "GUID:455ee281b6fd405fb6e1bd33323504dc"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
