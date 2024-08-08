@@ -31,8 +31,7 @@ namespace Gameplay.Collision
 				return;
 			}
 
-			Debug.Log($"Spell {name} provide collision to Enemy. Damage {_damagingSpellDefinition.SpellDamage}");
-			receiver.OnReceiverCollision();
+			receiver.OnReceiverCollision(_damagingSpellDefinition.SpellDamage);
 		}
 	}
 }
