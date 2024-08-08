@@ -56,8 +56,9 @@ namespace Services.EnemySpawnService
 			subContainer.Bind<HealthPointsDataHolder>().AsSingle();
 			subContainer.Bind<ReceivedDamageDataHolder>().AsSingle();
 			// Биндинг обработчиков данных юнита
-			subContainer.BindInterfacesTo<EnemyHealthHandler>().AsSingle().NonLazy();
-			subContainer.BindInterfacesAndSelfTo<EnemyDeathHandler>().AsSingle().NonLazy();;
+			subContainer.BindInterfacesAndSelfTo<EnemyHealthRestoreOnSpawnHandler>().AsSingle().NonLazy();
+			subContainer.BindInterfacesAndSelfTo<EnemyTakeDamageHandler>().AsSingle().NonLazy();
+			subContainer.BindInterfacesAndSelfTo<EnemyDeathHandler>().AsSingle().NonLazy();
 
 			//TODO: В случае когда поведений будет больше одного
 			//необходимо будет сделать систему биндинга UnitDefinition и логики поведения юнитов

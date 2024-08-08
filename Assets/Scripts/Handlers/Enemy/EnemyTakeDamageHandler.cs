@@ -1,46 +1,29 @@
 using System;
 using DataHolders;
-using Definitions.Enemies;
 using JetBrains.Annotations;
 using UniRx;
-using Zenject;
 
 namespace Handlers.Enemy
 {
 	[UsedImplicitly]
-	public sealed class EnemyHealthHandler : IPoolable, IDisposable
+	public sealed class EnemyTakeDamageHandler : IDisposable
 	{
 		private readonly IDisposable _receivedDamageSubscription;
-
 		private readonly ReceivedDamageDataHolder _receivedDamageDataHolder;
 		private readonly HealthPointsDataHolder _healthPointsDataHolder;
-		private readonly IBaseGroundMovingUnitDefinition _baseGroundMovingUnitDefinition;
 
-		public EnemyHealthHandler(
+		public EnemyTakeDamageHandler(
 			ReceivedDamageDataHolder receivedDamageDataHolder,
-			HealthPointsDataHolder healthPointsDataHolder,
-			IBaseGroundMovingUnitDefinition baseGroundMovingUnitDefinition)
+			HealthPointsDataHolder healthPointsDataHolder)
 		{
 			_healthPointsDataHolder = healthPointsDataHolder;
-			_baseGroundMovingUnitDefinition = baseGroundMovingUnitDefinition;
 			_receivedDamageSubscription = receivedDamageDataHolder.Damage
 				.Subscribe(TakeDamage);
 		}
 
-		public void TakeDamage(float damage)
+		private void TakeDamage(float damage)
 		{
 			_healthPointsDataHolder.CurrentHealth.Value -= damage;
-		}
-
-		public void OnSpawned()
-		{
-			var hp = _baseGroundMovingUnitDefinition.HealthPoints;
-			_healthPointsDataHolder.MaxHealth.Value = hp;
-			_healthPointsDataHolder.CurrentHealth.Value = hp;
-		}
-
-		public void OnDespawned()
-		{
 		}
 
 		public void Dispose()
