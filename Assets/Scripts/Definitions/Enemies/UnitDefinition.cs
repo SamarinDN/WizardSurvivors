@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Definitions.Enemies
 {
-	public abstract class UnitDefinition : ScriptableObject
+	public abstract class UnitDefinition : ScriptableObject, IUnitDefinition
 	{
 		[Header("Unit view")]
 		[SerializeField]

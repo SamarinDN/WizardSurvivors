@@ -1,7 +1,9 @@
+using DataHolders;
 using DataHolders.Transform;
 using Definitions.Enemies;
 using Definitions.LevelSettings;
 using Gameplay.UnitBehaviourLogic.ApproachingToPlayerLogic;
+using Handlers.Enemy;
 using UnityEngine;
 using Zenject;
 
@@ -42,12 +44,22 @@ namespace Services.EnemySpawnService
 
 		private static void InstallEnemy(DiContainer subContainer, UnitDefinition enemy)
 		{
-			subContainer.Bind(enemy.GetType()).FromScriptableObject(enemy).AsSingle();
+			// Биндинг баланса юнита
+			subContainer.BindInterfacesAndSelfTo(enemy.GetType()).FromScriptableObject(enemy).AsSingle();
+			// Биндинг классов пула
 			subContainer.Bind<EnemyGameObjectPoolableFacade>().FromNewComponentOnRoot().AsSingle();
 			subContainer.Bind<PoolableManager>().AsSingle();
+			// Биндинг данных юнита
 			subContainer.Bind<TransformActivityDataHolder>().AsSingle();
 			subContainer.Bind<PositionDataHolder>().AsSingle();
 			subContainer.Bind<RotationDataHolder>().AsSingle();
+			subContainer.Bind<HealthPointsDataHolder>().AsSingle();
+			subContainer.Bind<ReceivedDamageDataHolder>().AsSingle();
+			// Биндинг обработчиков данных юнита
+			subContainer.BindInterfacesAndSelfTo<EnemyHealthRestoreOnSpawnHandler>().AsSingle().NonLazy();
+			subContainer.BindInterfacesAndSelfTo<EnemyTakeDamageHandler>().AsSingle().NonLazy();
+			subContainer.BindInterfacesAndSelfTo<EnemyDeathHandler>().AsSingle().NonLazy();
+
 			//TODO: В случае когда поведений будет больше одного
 			//необходимо будет сделать систему биндинга UnitDefinition и логики поведения юнитов
 			subContainer.BindInterfacesAndSelfTo<ApproachingToPlayerLogic>().AsSingle().NonLazy();

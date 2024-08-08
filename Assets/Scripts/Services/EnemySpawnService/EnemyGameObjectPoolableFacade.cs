@@ -63,7 +63,7 @@ namespace Services.EnemySpawnService
 		}
 
 		[UsedImplicitly]
-		public class Factory : PlaceholderFactory<Vector3, Quaternion, EnemyGameObjectPoolableFacade>
+		public sealed class Factory : PlaceholderFactory<Vector3, Quaternion, EnemyGameObjectPoolableFacade>
 		{
 			public UnitDefinition UnitType { get; private set; }
 

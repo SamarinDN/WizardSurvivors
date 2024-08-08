@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Definitions.Spells
 {
-	public abstract class SpellDefinition : ScriptableObject
+	public abstract class SpellDefinition : ScriptableObject, ISpellDefinition
 	{
 		[Header("Spell base stats")]
 		[SerializeField, Min(0f)]

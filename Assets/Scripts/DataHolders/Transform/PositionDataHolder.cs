@@ -5,7 +5,7 @@ using UnityEngine;
 namespace DataHolders.Transform
 {
 	[UsedImplicitly]
-	public class PositionDataHolder
+	public sealed class PositionDataHolder
 	{
 		public readonly ReactiveProperty<Vector3> Position = new();
 	}

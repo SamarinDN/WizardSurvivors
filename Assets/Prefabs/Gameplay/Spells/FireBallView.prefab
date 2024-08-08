@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6217337729468250155}
   - component: {fileID: 1233175147827376335}
   - component: {fileID: 9013826937250395070}
+  - component: {fileID: 5075665555266178171}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
@@ -99,12 +100,39 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &5075665555266178171
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 61126810841625687}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &4930559192016541400
 GameObject:
   m_ObjectHideFlags: 0
@@ -115,6 +143,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1283394953719628998}
   - component: {fileID: 6130443542568884224}
+  - component: {fileID: 1284401433185293594}
   m_Layer: 0
   m_Name: FireBallView
   m_TagString: Untagged
@@ -150,3 +179,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3291385520d14feea39ebd13a59a4e11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1284401433185293594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4930559192016541400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 272a3d9ccca0484ba1ff0c91097130ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  colliderComponent: {fileID: 9013826937250395070}

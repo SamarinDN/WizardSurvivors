@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Definitions.Spells
 {
 	[CreateAssetMenu(fileName = "SpellBook", menuName = "Definitions/SpellBook")]
-	public sealed class SpellBook : ScriptableObject
+	public sealed class SpellBook : ScriptableObject, ISpellBook
 	{
 		[SerializeField]
 		private List<SpellDefinition> spells;

@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Definitions.Enemies
 {
-	public abstract class BaseGroundMovingUnitDefinition : UnitDefinition
+	public abstract class BaseGroundMovingUnitDefinition : UnitDefinition, IBaseGroundMovingUnitDefinition
 	{
 		[Header("Base unit stats")]
 		[SerializeField, Min(0f)]

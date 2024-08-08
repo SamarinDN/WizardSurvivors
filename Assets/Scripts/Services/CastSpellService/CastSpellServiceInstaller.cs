@@ -49,13 +49,15 @@ namespace Services.CastSpellService
 				.WithFactoryArguments(spell)
 				.FromMonoPoolableMemoryPool(poolBind => poolBind
 					.FromSubContainerResolve()
-					.ByNewPrefabMethod(_ => spell.SpellView, container => InstallSpell(container, spellLogicType))
+					.ByNewPrefabMethod(_ => spell.SpellView,
+						container => InstallSpell(container, spell, spellLogicType))
 					.UnderTransformGroup($"[SpellPool - {spell.name}]"));
 		}
 
-		private static void InstallSpell(DiContainer subContainer, Type spell)
+		private static void InstallSpell(DiContainer subContainer, SpellDefinition spell, Type spellLogicType)
 		{
-			subContainer.BindInterfacesTo(spell).AsSingle().NonLazy();
+			subContainer.BindInterfacesAndSelfTo(spell.GetType()).FromScriptableObject(spell).AsSingle().NonLazy();
+			subContainer.BindInterfacesTo(spellLogicType).AsSingle().NonLazy();
 			subContainer.Bind<SpellGameObjectPoolableFacade>().FromNewComponentOnRoot().AsSingle();
 			subContainer.Bind<PoolableManager>().AsSingle();
 			subContainer.Bind<PositionDataHolder>().AsSingle();

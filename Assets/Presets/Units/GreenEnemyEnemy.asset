@@ -17,5 +17,5 @@ MonoBehaviour:
   healthPoints: 70
   movementSpeed: 6
   rotationSpeed: 360
-  damageReductionMultiplier: 0
+  damageReductionMultiplier: 1
   damage: 10

@@ -1,0 +1,19 @@
+{
+    "name": "Handlers.Enemy",
+    "rootNamespace": "",
+    "references": [
+        "GUID:3ebc030a91b4d4239bf4437502421b3e",
+        "GUID:f3f5228ff1f04ed69141aa622cb828ea",
+        "GUID:560b04d1a97f54a4e82edc0cbbb69285",
+        "GUID:455ee281b6fd405fb6e1bd33323504dc"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
