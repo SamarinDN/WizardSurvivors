@@ -1,4 +1,4 @@
-using Handlers.Enemy;
+using DataHolders;
 using UnityEngine;
 using Zenject;
 
@@ -6,17 +6,17 @@ namespace Gameplay.Collision
 {
 	public sealed class EnemyCollisionReceiver : MonoBehaviour
 	{
-		private IEnemyHealthHandler _enemyHealthHandler;
+		private ReceivedDamageDataHolder _receivedDamageDataHolder;
 
 		[Inject]
-		private void Constructor(IEnemyHealthHandler enemyHealthHandler)
+		private void Constructor(ReceivedDamageDataHolder receivedDamageDataHolder)
 		{
-			_enemyHealthHandler = enemyHealthHandler;
+			_receivedDamageDataHolder = receivedDamageDataHolder;
 		}
 
 		public void OnReceiverCollision(float damage)
 		{
-			_enemyHealthHandler.TakeDamage(damage);
+			_receivedDamageDataHolder.Damage.Execute(damage);
 		}
 	}
 }

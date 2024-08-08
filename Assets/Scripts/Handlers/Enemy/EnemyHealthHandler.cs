@@ -1,31 +1,35 @@
+using System;
 using DataHolders;
 using Definitions.Enemies;
 using JetBrains.Annotations;
-using UnityEngine;
+using UniRx;
 using Zenject;
 
 namespace Handlers.Enemy
 {
 	[UsedImplicitly]
-	public sealed class EnemyHealthHandler : IPoolable, IEnemyHealthHandler
+	public sealed class EnemyHealthHandler : IPoolable, IDisposable
 	{
+		private readonly IDisposable _receivedDamageSubscription;
+
+		private readonly ReceivedDamageDataHolder _receivedDamageDataHolder;
 		private readonly HealthPointsDataHolder _healthPointsDataHolder;
 		private readonly IBaseGroundMovingUnitDefinition _baseGroundMovingUnitDefinition;
 
 		public EnemyHealthHandler(
+			ReceivedDamageDataHolder receivedDamageDataHolder,
 			HealthPointsDataHolder healthPointsDataHolder,
 			IBaseGroundMovingUnitDefinition baseGroundMovingUnitDefinition)
 		{
 			_healthPointsDataHolder = healthPointsDataHolder;
 			_baseGroundMovingUnitDefinition = baseGroundMovingUnitDefinition;
+			_receivedDamageSubscription = receivedDamageDataHolder.Damage
+				.Subscribe(TakeDamage);
 		}
 
 		public void TakeDamage(float damage)
 		{
 			_healthPointsDataHolder.CurrentHealth.Value -= damage;
-			Debug.Log(
-				$"Enemy takeDamage {damage} dmg. " +
-				$"Enemy HP = {_healthPointsDataHolder.CurrentHealth.Value} / {_healthPointsDataHolder.MaxHealth.Value}");
 		}
 
 		public void OnSpawned()
@@ -37,6 +41,11 @@ namespace Handlers.Enemy
 
 		public void OnDespawned()
 		{
+		}
+
+		public void Dispose()
+		{
+			_receivedDamageSubscription?.Dispose();
 		}
 	}
 }

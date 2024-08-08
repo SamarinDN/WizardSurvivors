@@ -54,6 +54,7 @@ namespace Services.EnemySpawnService
 			subContainer.Bind<PositionDataHolder>().AsSingle();
 			subContainer.Bind<RotationDataHolder>().AsSingle();
 			subContainer.Bind<HealthPointsDataHolder>().AsSingle();
+			subContainer.Bind<ReceivedDamageDataHolder>().AsSingle();
 			// Биндинг обработчиков данных юнита
 			subContainer.BindInterfacesTo<EnemyHealthHandler>().AsSingle().NonLazy();
 			subContainer.BindInterfacesAndSelfTo<EnemyDeathHandler>().AsSingle().NonLazy();;
