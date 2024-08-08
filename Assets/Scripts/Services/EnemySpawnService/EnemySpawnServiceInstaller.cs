@@ -44,14 +44,19 @@ namespace Services.EnemySpawnService
 
 		private static void InstallEnemy(DiContainer subContainer, UnitDefinition enemy)
 		{
+			// Биндинг баланса юнита
 			subContainer.BindInterfacesAndSelfTo(enemy.GetType()).FromScriptableObject(enemy).AsSingle();
+			// Биндинг классов пула
 			subContainer.Bind<EnemyGameObjectPoolableFacade>().FromNewComponentOnRoot().AsSingle();
 			subContainer.Bind<PoolableManager>().AsSingle();
+			// Биндинг данных юнита
 			subContainer.Bind<TransformActivityDataHolder>().AsSingle();
 			subContainer.Bind<PositionDataHolder>().AsSingle();
 			subContainer.Bind<RotationDataHolder>().AsSingle();
 			subContainer.Bind<HealthPointsDataHolder>().AsSingle();
+			// Биндинг обработчиков данных юнита
 			subContainer.BindInterfacesTo<EnemyHealthHandler>().AsSingle().NonLazy();
+
 			//TODO: В случае когда поведений будет больше одного
 			//необходимо будет сделать систему биндинга UnitDefinition и логики поведения юнитов
 			subContainer.BindInterfacesAndSelfTo<ApproachingToPlayerLogic>().AsSingle().NonLazy();
