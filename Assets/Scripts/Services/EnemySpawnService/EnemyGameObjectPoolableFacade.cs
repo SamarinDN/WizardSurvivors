@@ -1,4 +1,5 @@
 using System;
+using DataHolders;
 using DataHolders.Transform;
 using Definitions.Enemies;
 using JetBrains.Annotations;
@@ -15,6 +16,7 @@ namespace Services.EnemySpawnService
 		private IMemoryPool _pool;
 
 		private TransformActivityDataHolder _transformActivityDataHolder;
+		private CountOfEnemiesAtLevelDataHolder _countOfEnemiesAtLevelDataHolder;
 		private PositionDataHolder _positionDataHolder;
 		private RotationDataHolder _rotationDataHolder;
 
@@ -22,10 +24,12 @@ namespace Services.EnemySpawnService
 		private void Constructor(
 			PoolableManager poolableManager,
 			TransformActivityDataHolder transformActivityDataHolder,
+			CountOfEnemiesAtLevelDataHolder countOfEnemiesAtLevelDataHolder,
 			PositionDataHolder positionDataHolder,
 			RotationDataHolder rotationDataHolder)
 		{
 			_transformActivityDataHolder = transformActivityDataHolder;
+			_countOfEnemiesAtLevelDataHolder = countOfEnemiesAtLevelDataHolder;
 			_positionDataHolder = positionDataHolder;
 			_rotationDataHolder = rotationDataHolder;
 			_poolableManager = poolableManager;
@@ -35,6 +39,7 @@ namespace Services.EnemySpawnService
 
 		public void OnSpawned(Vector3 position, Quaternion rotation, IMemoryPool pool)
 		{
+			_countOfEnemiesAtLevelDataHolder.CountOfEnemies.Value++;
 			_transformActivityDataHolder.IsActive.Value = true;
 			_positionDataHolder.Position.Value = position;
 			_rotationDataHolder.Rotation.Value = rotation;
@@ -47,6 +52,7 @@ namespace Services.EnemySpawnService
 
 		public void OnDespawned()
 		{
+			_countOfEnemiesAtLevelDataHolder.CountOfEnemies.Value--;
 			_transformActivityDataHolder.IsActive.Value = false;
 			_pool = null;
 			_poolableManager.TriggerOnDespawned();
