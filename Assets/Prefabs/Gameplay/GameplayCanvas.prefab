@@ -733,7 +733,7 @@ MonoBehaviour:
   previousSpell: {fileID: 4927258325802995146}
   activeSpell: {fileID: 614035507863991610}
   nextSpell: {fileID: 5129938260574757979}
-  Cooldown: {fileID: 135344045546963073}
+  cooldown: {fileID: 135344045546963073}
 --- !u!1 &6660019421709770977
 GameObject:
   m_ObjectHideFlags: 0
