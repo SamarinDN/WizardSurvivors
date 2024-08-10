@@ -33,7 +33,6 @@ namespace Services.EnemySpawnService
 		public void Initialize()
 		{
 			Observable.Interval(TimeSpan.FromSeconds(_levelSettings.SpawnEnemiesInterval))
-				.TakeWhile(_ => _countOfEnemiesAtLevelDataHolder.CountOfEnemies.Value < _levelSettings.MaximumEnemiesCountInLevel)
 				.Subscribe(_ => TrySpawnEnemy())
 				.AddTo(_disposables);
 		}
@@ -44,6 +43,14 @@ namespace Services.EnemySpawnService
 		}
 
 		private void TrySpawnEnemy()
+		{
+			if (_countOfEnemiesAtLevelDataHolder.CountOfEnemies.Value < _levelSettings.MaximumEnemiesCountInLevel)
+			{
+				SpawnEnemy();
+			}
+		}
+
+		private void SpawnEnemy()
 		{
 			var enemyRandomIndex = UnityEngine.Random.Range(0, _levelSettings.AvailableEnemiesOnLevel.Count);
 			var enemy = _levelSettings.AvailableEnemiesOnLevel[enemyRandomIndex];
