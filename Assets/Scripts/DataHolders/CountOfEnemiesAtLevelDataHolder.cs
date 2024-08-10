@@ -1,8 +1,10 @@
+using JetBrains.Annotations;
 using UniRx;
 
 namespace DataHolders
 {
-	public class CountOfEnemiesAtLevelDataHolder
+	[UsedImplicitly]
+	public sealed class CountOfEnemiesAtLevelDataHolder
 	{
 		public readonly ReactiveProperty<int> CountOfEnemies = new();
 	}
