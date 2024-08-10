@@ -1,5 +1,6 @@
 using DataHolders;
 using Definitions.Units;
+using Handlers.Player;
 using UnityEngine;
 using Zenject;
 
@@ -15,8 +16,12 @@ namespace Services.PlayerSpawnService
 			Container.Bind<PlayerDefinition>().FromScriptableObject(playerDefinition).AsSingle();
 			Container.Bind<HealthPointsDataHolder>().AsSingle();
 			Container.Bind<ReceivedDamageDataHolder>().AsSingle();
+			Container.Bind<InvincibilityDataHolder>().AsSingle();
 
 			Container.Bind<PlayerTakeDamageHandler>().AsSingle().NonLazy();
+			Container.Bind<PlayerInvincibilityAfterGettingHitHandler>().AsSingle().NonLazy();
+			Container.BindInstance(playerDefinition.SecondsInvincibilityAfterGettingHit)
+				.WhenInjectedInto<PlayerInvincibilityAfterGettingHitHandler>();
 
 			Container.BindInterfacesTo<PlayerSpawnService>().AsSingle().NonLazy();
 		}
