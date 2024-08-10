@@ -19,7 +19,7 @@ namespace Gameplay.View.UI
 		private Image nextSpell;
 
 		[SerializeField]
-		private Image Cooldown;
+		private Image cooldown;
 
 		private ISelectSpellService _selectSpellService;
 		private ICastSpellService _castSpellService;
@@ -63,7 +63,7 @@ namespace Gameplay.View.UI
 
 		private void OnCooldownChanged()
 		{
-			Cooldown.fillAmount = _castSpellService.IsSpellCanBeCast.Value
+			cooldown.fillAmount = _castSpellService.IsSpellCanBeCast.Value
 				? 0f
 				: _castSpellService.SpellCooldownPercentage.Value;
 		}

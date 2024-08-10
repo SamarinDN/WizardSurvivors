@@ -1,10 +1,10 @@
 using System;
 using DataHolders;
-using Definitions.Enemies;
+using Definitions.Units;
 using JetBrains.Annotations;
 using UniRx;
 
-namespace Handlers.Enemy
+namespace Handlers.Player
 {
 	[UsedImplicitly]
 	public sealed class PlayerTakeDamageHandler : IDisposable

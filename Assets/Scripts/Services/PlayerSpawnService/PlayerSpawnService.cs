@@ -1,5 +1,5 @@
 using DataHolders;
-using Definitions.Enemies;
+using Definitions.Units;
 using JetBrains.Annotations;
 
 namespace Services.PlayerSpawnService

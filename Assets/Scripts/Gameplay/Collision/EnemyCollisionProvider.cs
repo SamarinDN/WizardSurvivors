@@ -1,4 +1,4 @@
-using Definitions.Enemies;
+using Definitions.Units;
 using UniRx;
 using UniRx.Triggers;
 using UnityEngine;

@@ -1,6 +1,6 @@
 using System;
 using DataHolders.Transform;
-using Definitions.Enemies;
+using Definitions.Units;
 using JetBrains.Annotations;
 using Services.PlayerMovementService;
 using UniRx;

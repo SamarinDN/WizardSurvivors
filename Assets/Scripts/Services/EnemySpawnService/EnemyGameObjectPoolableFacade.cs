@@ -1,7 +1,7 @@
 using System;
 using DataHolders;
 using DataHolders.Transform;
-using Definitions.Enemies;
+using Definitions.Units;
 using JetBrains.Annotations;
 using UniRx;
 using UnityEngine;
