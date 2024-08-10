@@ -1,6 +1,5 @@
 using DataHolders;
 using Definitions.Enemies;
-using Handlers.Enemy;
 using UnityEngine;
 using Zenject;
 

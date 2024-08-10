@@ -4,7 +4,7 @@ using Definitions.Enemies;
 using JetBrains.Annotations;
 using UniRx;
 
-namespace Handlers.Enemy
+namespace Handlers.Player
 {
 	[UsedImplicitly]
 	public sealed class PlayerTakeDamageHandler : IDisposable
