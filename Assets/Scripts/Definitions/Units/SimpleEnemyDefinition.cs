@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Definitions.Enemies
+namespace Definitions.Units
 {
 	[CreateAssetMenu(fileName = "SimpleEnemy", menuName = "Definitions/Units/SimpleEnemy")]
 	public sealed class SimpleEnemyDefinition : BaseGroundMovingUnitDefinition

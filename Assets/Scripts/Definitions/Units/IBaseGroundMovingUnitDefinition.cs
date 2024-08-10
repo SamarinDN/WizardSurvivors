@@ -1,4 +1,4 @@
-namespace Definitions.Enemies
+namespace Definitions.Units
 {
 	public interface IBaseGroundMovingUnitDefinition
 	{

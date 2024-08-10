@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Definitions.Enemies;
+using Definitions.Units;
 using UnityEngine;
 
 namespace Definitions.LevelSettings

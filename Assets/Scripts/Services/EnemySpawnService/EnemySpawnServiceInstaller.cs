@@ -1,6 +1,6 @@
 using DataHolders;
 using DataHolders.Transform;
-using Definitions.Enemies;
+using Definitions.Units;
 using Definitions.LevelSettings;
 using Gameplay.UnitBehaviourLogic.ApproachingToPlayerLogic;
 using Handlers.Enemy;

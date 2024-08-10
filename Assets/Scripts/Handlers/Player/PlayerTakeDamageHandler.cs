@@ -1,6 +1,6 @@
 using System;
 using DataHolders;
-using Definitions.Enemies;
+using Definitions.Units;
 using JetBrains.Annotations;
 using UniRx;
 
