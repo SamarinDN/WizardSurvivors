@@ -16,6 +16,7 @@ namespace Services.EnemySpawnService
 
 		public override void InstallBindings()
 		{
+			Container.Bind<CountOfEnemiesAtLevelDataHolder>().AsSingle();
 			Container.Bind<EnemySpawnHandler>().AsSingle();
 			BindEnemyFactories();
 			Container.Bind<LevelSettingsDefinition>().FromScriptableObject(levelSettings).AsSingle().NonLazy();

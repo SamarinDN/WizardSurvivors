@@ -1,4 +1,5 @@
 using System;
+using DataHolders;
 using Definitions.LevelSettings;
 using JetBrains.Annotations;
 using Services.LevelBoundsService;
@@ -14,25 +15,24 @@ namespace Services.EnemySpawnService
 		private readonly CompositeDisposable _disposables = new();
 
 		private readonly LevelSettingsDefinition _levelSettings;
+		private readonly CountOfEnemiesAtLevelDataHolder _countOfEnemiesAtLevelDataHolder;
 		private readonly EnemySpawnHandler _enemySpawnHandler;
 		private readonly ILevelBoundsProvider _levelBound;
 
-		private int _enemySpawnCount;
-
 		public EnemySpawnService(LevelSettingsDefinition levelSettings,
+			CountOfEnemiesAtLevelDataHolder countOfEnemiesAtLevelDataHolder,
 			EnemySpawnHandler enemySpawnHandler,
 			ILevelBoundsProvider levelBound)
 		{
 			_levelSettings = levelSettings;
+			_countOfEnemiesAtLevelDataHolder = countOfEnemiesAtLevelDataHolder;
 			_enemySpawnHandler = enemySpawnHandler;
 			_levelBound = levelBound;
 		}
 
 		public void Initialize()
 		{
-			_enemySpawnCount = 0;
 			Observable.Interval(TimeSpan.FromSeconds(_levelSettings.SpawnEnemiesInterval))
-				.TakeWhile(_ => _enemySpawnCount < _levelSettings.MaximumEnemiesCountInLevel)
 				.Subscribe(_ => TrySpawnEnemy())
 				.AddTo(_disposables);
 		}
@@ -44,7 +44,14 @@ namespace Services.EnemySpawnService
 
 		private void TrySpawnEnemy()
 		{
-			_enemySpawnCount++;
+			if (_countOfEnemiesAtLevelDataHolder.CountOfEnemies.Value < _levelSettings.MaximumEnemiesCountInLevel)
+			{
+				SpawnEnemy();
+			}
+		}
+
+		private void SpawnEnemy()
+		{
 			var enemyRandomIndex = UnityEngine.Random.Range(0, _levelSettings.AvailableEnemiesOnLevel.Count);
 			var enemy = _levelSettings.AvailableEnemiesOnLevel[enemyRandomIndex];
 
