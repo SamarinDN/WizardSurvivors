@@ -176,6 +176,34 @@ namespace Presets.Inputs
                     ""isPartOfComposite"": true
                 }
             ]
+        },
+        {
+            ""name"": ""UI"",
+            ""id"": ""6e5fb1f0-418e-4d15-ac08-0580cfadd39e"",
+            ""actions"": [
+                {
+                    ""name"": ""Submit"",
+                    ""type"": ""Button"",
+                    ""id"": ""17085222-8410-414d-9a1c-691a5c78e8a4"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""4cf8306d-b23b-4464-9cab-467f58495b2b"",
+                    ""path"": ""<Keyboard>/x"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Submit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -199,6 +227,9 @@ namespace Presets.Inputs
             m_Player_CastSpell = m_Player.FindAction("CastSpell", throwIfNotFound: true);
             m_Player_SelectPreviousSpell = m_Player.FindAction("SelectPreviousSpell", throwIfNotFound: true);
             m_Player_SelectNextSpell = m_Player.FindAction("SelectNextSpell", throwIfNotFound: true);
+            // UI
+            m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
+            m_UI_Submit = m_UI.FindAction("Submit", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -334,6 +365,52 @@ namespace Presets.Inputs
             }
         }
         public PlayerActions @Player => new PlayerActions(this);
+
+        // UI
+        private readonly InputActionMap m_UI;
+        private List<IUIActions> m_UIActionsCallbackInterfaces = new List<IUIActions>();
+        private readonly InputAction m_UI_Submit;
+        public struct UIActions
+        {
+            private @GameplayInputActions m_Wrapper;
+            public UIActions(@GameplayInputActions wrapper) { m_Wrapper = wrapper; }
+            public InputAction @Submit => m_Wrapper.m_UI_Submit;
+            public InputActionMap Get() { return m_Wrapper.m_UI; }
+            public void Enable() { Get().Enable(); }
+            public void Disable() { Get().Disable(); }
+            public bool enabled => Get().enabled;
+            public static implicit operator InputActionMap(UIActions set) { return set.Get(); }
+            public void AddCallbacks(IUIActions instance)
+            {
+                if (instance == null || m_Wrapper.m_UIActionsCallbackInterfaces.Contains(instance)) return;
+                m_Wrapper.m_UIActionsCallbackInterfaces.Add(instance);
+                @Submit.started += instance.OnSubmit;
+                @Submit.performed += instance.OnSubmit;
+                @Submit.canceled += instance.OnSubmit;
+            }
+
+            private void UnregisterCallbacks(IUIActions instance)
+            {
+                @Submit.started -= instance.OnSubmit;
+                @Submit.performed -= instance.OnSubmit;
+                @Submit.canceled -= instance.OnSubmit;
+            }
+
+            public void RemoveCallbacks(IUIActions instance)
+            {
+                if (m_Wrapper.m_UIActionsCallbackInterfaces.Remove(instance))
+                    UnregisterCallbacks(instance);
+            }
+
+            public void SetCallbacks(IUIActions instance)
+            {
+                foreach (var item in m_Wrapper.m_UIActionsCallbackInterfaces)
+                    UnregisterCallbacks(item);
+                m_Wrapper.m_UIActionsCallbackInterfaces.Clear();
+                AddCallbacks(instance);
+            }
+        }
+        public UIActions @UI => new UIActions(this);
         private int m_KeyboardSchemeIndex = -1;
         public InputControlScheme KeyboardScheme
         {
@@ -350,6 +427,10 @@ namespace Presets.Inputs
             void OnCastSpell(InputAction.CallbackContext context);
             void OnSelectPreviousSpell(InputAction.CallbackContext context);
             void OnSelectNextSpell(InputAction.CallbackContext context);
+        }
+        public interface IUIActions
+        {
+            void OnSubmit(InputAction.CallbackContext context);
         }
     }
 }
