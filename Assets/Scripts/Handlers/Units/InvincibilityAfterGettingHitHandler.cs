@@ -5,17 +5,17 @@ using UniRx;
 using UnityEngine;
 using Utility.UniRxExtensions;
 
-namespace Handlers.Player
+namespace Handlers.Units
 {
 	[UsedImplicitly]
-	public sealed class PlayerInvincibilityAfterGettingHitHandler : IDisposable
+	public sealed class InvincibilityAfterGettingHitHandler : IDisposable
 	{
 		private IDisposable _everyUpdateCountdownSubscription;
 		private readonly IDisposable _receivedDamageSubscription;
 		private readonly InvincibilityDataHolder _invincibilityDataHolder;
 		private readonly ReceivedDamageDataHolder _receivedDamageDataHolder;
 
-		public PlayerInvincibilityAfterGettingHitHandler(
+		public InvincibilityAfterGettingHitHandler(
 			float secondsInvincibilityAfterGettingHit,
 			InvincibilityDataHolder invincibilityDataHolder,
 			ReceivedDamageDataHolder receivedDamageDataHolder)
@@ -30,7 +30,7 @@ namespace Handlers.Player
 		{
 			if (_invincibilityDataHolder.IsInvincibility.Value)
 			{
-				Debug.LogError("The player got hit while invincibility.");
+				Debug.LogError("The unit got hit while invincibility.");
 				return;
 			}
 
