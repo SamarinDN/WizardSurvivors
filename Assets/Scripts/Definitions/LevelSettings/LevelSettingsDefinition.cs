@@ -9,7 +9,7 @@ namespace Definitions.LevelSettings
 	{
 		[Header("Enemy types on the level")]
 		[SerializeField]
-		private List<UnitDefinition> availableEnemiesOnLevel;
+		private List<SimpleEnemyDefinition> availableEnemiesOnLevel;
 
 		[Header("Maximum number of enemies at the same time")]
 		[SerializeField, Min(0f)]
@@ -20,7 +20,7 @@ namespace Definitions.LevelSettings
 		private float spawnEnemiesInterval;
 
 
-		public IReadOnlyList<UnitDefinition> AvailableEnemiesOnLevel => availableEnemiesOnLevel;
+		public IReadOnlyList<SimpleEnemyDefinition> AvailableEnemiesOnLevel => availableEnemiesOnLevel;
 		public int MaximumEnemiesCountInLevel => maximumEnemiesCountInLevel;
 		public float SpawnEnemiesInterval => spawnEnemiesInterval;
 	}

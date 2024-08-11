@@ -32,7 +32,7 @@ namespace Services.EnemySpawnService
 			}
 		}
 
-		private void BindEnemyFactory(UnitDefinition enemy)
+		private void BindEnemyFactory(SimpleEnemyDefinition enemy)
 		{
 			Container
 				.BindFactory<Vector3, Quaternion, EnemyGameObjectPoolableFacade,
@@ -44,7 +44,7 @@ namespace Services.EnemySpawnService
 					.UnderTransformGroup($"[EnemyPool - {enemy.name}]"));
 		}
 
-		private static void InstallEnemy(DiContainer subContainer, UnitDefinition enemy)
+		private static void InstallEnemy(DiContainer subContainer, SimpleEnemyDefinition enemy)
 		{
 			// Биндинг баланса юнита
 			subContainer.BindInterfacesAndSelfTo(enemy.GetType()).FromScriptableObject(enemy).AsSingle();
@@ -63,8 +63,7 @@ namespace Services.EnemySpawnService
 			subContainer.BindInterfacesAndSelfTo<EnemyTakeDamageHandler>().AsSingle().NonLazy();
 			subContainer.BindInterfacesAndSelfTo<EnemyDeathHandler>().AsSingle().NonLazy();
 			subContainer.Bind<InvincibilityAfterGettingHitHandler>().AsSingle().NonLazy();
-			//TODO: Необходимо измененить логику получения баланса юнитов чтобы в этом месте не было cast-а
-			subContainer.BindInstance(((IBaseGroundMovingUnitDefinition)enemy).SecondsInvincibilityAfterGettingHit)
+			subContainer.BindInstance(enemy.SecondsInvincibilityAfterGettingHit)
 				.WhenInjectedInto<InvincibilityAfterGettingHitHandler>();
 
 			//TODO: В случае когда поведений будет больше одного
