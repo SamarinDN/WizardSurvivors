@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 269425564300312430}
   - component: {fileID: 4137305389473907556}
   - component: {fileID: 898627162632887935}
+  - component: {fileID: 2281049869984855009}
   m_Layer: 0
   m_Name: PlayerInput
   m_TagString: Untagged
@@ -139,6 +140,23 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 2f9682c1-765c-4da3-bda1-4eb79384ea45
     m_ActionName: Player/Rotate[/Keyboard/leftArrow,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2281049869984855009}
+        m_TargetAssemblyTypeName: Services.InputService.GameplayUIInputProvider,
+          Services.InputService
+        m_MethodName: OnSubmit
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 17085222-8410-414d-9a1c-691a5c78e8a4
+    m_ActionName: UI/Submit[/Keyboard/x]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -154,5 +172,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 269d18b460db4375959a19da13d76b64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2281049869984855009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6426001790335165063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f776874a6a7485a8ca3806e9b3cd282, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
