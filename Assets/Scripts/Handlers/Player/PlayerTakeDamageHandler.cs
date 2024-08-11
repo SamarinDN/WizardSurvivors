@@ -1,6 +1,5 @@
 using System;
 using DataHolders;
-using Definitions.Units;
 using JetBrains.Annotations;
 using UniRx;
 
@@ -15,11 +14,11 @@ namespace Handlers.Player
 		private readonly float _damageMitigationMultiplier;
 
 		public PlayerTakeDamageHandler(
-			PlayerDefinition playerDefinition,
+			float damageMitigationMultiplier,
 			ReceivedDamageDataHolder receivedDamageDataHolder,
 			HealthPointsDataHolder healthPointsDataHolder)
 		{
-			_damageMitigationMultiplier = playerDefinition.DamageReductionMultiplier;
+			_damageMitigationMultiplier = damageMitigationMultiplier;
 			_healthPointsDataHolder = healthPointsDataHolder;
 			_receivedDamageSubscription = receivedDamageDataHolder.Damage
 				.Subscribe(TakeDamage);

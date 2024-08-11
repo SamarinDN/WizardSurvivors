@@ -20,6 +20,9 @@ namespace Services.PlayerSpawnService
 			Container.Bind<InvincibilityDataHolder>().AsSingle();
 
 			Container.Bind<PlayerTakeDamageHandler>().AsSingle().NonLazy();
+			Container.BindInstance(playerDefinition.DamageReductionMultiplier)
+				.WhenInjectedInto<PlayerTakeDamageHandler>();
+
 			Container.Bind<InvincibilityAfterGettingHitHandler>().AsSingle().NonLazy();
 			Container.BindInstance(playerDefinition.SecondsInvincibilityAfterGettingHit)
 				.WhenInjectedInto<InvincibilityAfterGettingHitHandler>();
