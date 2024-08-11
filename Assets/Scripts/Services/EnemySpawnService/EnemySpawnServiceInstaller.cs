@@ -4,6 +4,7 @@ using Definitions.Units;
 using Definitions.LevelSettings;
 using Gameplay.UnitBehaviourLogic.ApproachingToPlayerLogic;
 using Handlers.Enemy;
+using Handlers.Units;
 using UnityEngine;
 using Zenject;
 
@@ -56,10 +57,15 @@ namespace Services.EnemySpawnService
 			subContainer.Bind<RotationDataHolder>().AsSingle();
 			subContainer.Bind<HealthPointsDataHolder>().AsSingle();
 			subContainer.Bind<ReceivedDamageDataHolder>().AsSingle();
+			subContainer.Bind<InvincibilityDataHolder>().AsSingle();
 			// Биндинг обработчиков данных юнита
 			subContainer.BindInterfacesAndSelfTo<EnemyHealthRestoreOnSpawnHandler>().AsSingle().NonLazy();
 			subContainer.BindInterfacesAndSelfTo<EnemyTakeDamageHandler>().AsSingle().NonLazy();
 			subContainer.BindInterfacesAndSelfTo<EnemyDeathHandler>().AsSingle().NonLazy();
+			subContainer.Bind<InvincibilityAfterGettingHitHandler>().AsSingle().NonLazy();
+			//TODO: Необходимо измененить логику получения баланса юнитов чтобы в этом месте не было cast-а
+			subContainer.BindInstance(((IBaseGroundMovingUnitDefinition)enemy).SecondsInvincibilityAfterGettingHit)
+				.WhenInjectedInto<InvincibilityAfterGettingHitHandler>();
 
 			//TODO: В случае когда поведений будет больше одного
 			//необходимо будет сделать систему биндинга UnitDefinition и логики поведения юнитов
