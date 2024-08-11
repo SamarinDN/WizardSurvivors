@@ -1,25 +1,24 @@
 using System;
 using DataHolders;
-using Definitions.Units;
 using JetBrains.Annotations;
 using UniRx;
 
-namespace Handlers.Enemy
+namespace Handlers.Units
 {
 	[UsedImplicitly]
-	public sealed class EnemyTakeDamageHandler : IDisposable
+	public sealed class TakeDamageHandler : IDisposable
 	{
 		private readonly IDisposable _receivedDamageSubscription;
 		private readonly ReceivedDamageDataHolder _receivedDamageDataHolder;
 		private readonly HealthPointsDataHolder _healthPointsDataHolder;
 		private readonly float _damageMitigationMultiplier;
 
-		public EnemyTakeDamageHandler(
-			IBaseGroundMovingUnitDefinition baseGroundMovingUnitDefinition,
+		public TakeDamageHandler(
+			float damageMitigationMultiplier,
 			ReceivedDamageDataHolder receivedDamageDataHolder,
 			HealthPointsDataHolder healthPointsDataHolder)
 		{
-			_damageMitigationMultiplier = baseGroundMovingUnitDefinition.DamageReductionMultiplier;
+			_damageMitigationMultiplier = damageMitigationMultiplier;
 			_healthPointsDataHolder = healthPointsDataHolder;
 			_receivedDamageSubscription = receivedDamageDataHolder.Damage
 				.Subscribe(TakeDamage);
