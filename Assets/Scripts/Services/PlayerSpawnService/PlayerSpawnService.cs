@@ -1,17 +1,29 @@
 using DataHolders;
 using Definitions.Units;
 using JetBrains.Annotations;
+using UniRx;
 
 namespace Services.PlayerSpawnService
 {
 	[UsedImplicitly]
 	internal sealed class PlayerSpawnService : IPlayerSpawnService
 	{
+		private readonly float _playerDefaultHealthPoints;
+		private readonly HealthPointsDataHolder _healthPointsDataHolder;
+
 		public PlayerSpawnService(PlayerDefinition playerDefinition,
-			HealthPointsDataHolder healthPointsDataHolder)
+			HealthPointsDataHolder healthPointsDataHolder,
+			GameStateDataHolder gameStateDataHolder)
 		{
-			healthPointsDataHolder.MaxHealth.Value = playerDefinition.HealthPoints;
-			healthPointsDataHolder.CurrentHealth.Value = playerDefinition.HealthPoints;
+			_playerDefaultHealthPoints = playerDefinition.HealthPoints;
+			_healthPointsDataHolder = healthPointsDataHolder;
+			gameStateDataHolder.GameStart.Subscribe(_ => RestorePlayerHealthPoints());
+		}
+
+		private void RestorePlayerHealthPoints()
+		{
+			_healthPointsDataHolder.MaxHealth.Value = _playerDefaultHealthPoints;
+			_healthPointsDataHolder.CurrentHealth.Value = _playerDefaultHealthPoints;
 		}
 	}
 }
