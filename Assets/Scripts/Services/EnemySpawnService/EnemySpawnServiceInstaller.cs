@@ -60,8 +60,15 @@ namespace Services.EnemySpawnService
 			subContainer.Bind<InvincibilityDataHolder>().AsSingle();
 			// Биндинг обработчиков данных юнита
 			subContainer.BindInterfacesAndSelfTo<EnemyHealthRestoreOnSpawnHandler>().AsSingle().NonLazy();
+			subContainer.BindInstance(enemy.HealthPoints)
+				.WhenInjectedInto<EnemyHealthRestoreOnSpawnHandler>();
+
 			subContainer.BindInterfacesAndSelfTo<EnemyTakeDamageHandler>().AsSingle().NonLazy();
+			subContainer.BindInstance(enemy.DamageReductionMultiplier)
+				.WhenInjectedInto<EnemyTakeDamageHandler>();
+
 			subContainer.BindInterfacesAndSelfTo<EnemyDeathHandler>().AsSingle().NonLazy();
+
 			subContainer.Bind<InvincibilityAfterGettingHitHandler>().AsSingle().NonLazy();
 			subContainer.BindInstance(enemy.SecondsInvincibilityAfterGettingHit)
 				.WhenInjectedInto<InvincibilityAfterGettingHitHandler>();

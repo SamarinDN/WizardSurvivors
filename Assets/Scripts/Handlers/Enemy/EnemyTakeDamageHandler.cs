@@ -1,6 +1,5 @@
 using System;
 using DataHolders;
-using Definitions.Units;
 using JetBrains.Annotations;
 using UniRx;
 
@@ -15,11 +14,11 @@ namespace Handlers.Enemy
 		private readonly float _damageMitigationMultiplier;
 
 		public EnemyTakeDamageHandler(
-			IBaseGroundMovingUnitDefinition baseGroundMovingUnitDefinition,
+			float damageMitigationMultiplier,
 			ReceivedDamageDataHolder receivedDamageDataHolder,
 			HealthPointsDataHolder healthPointsDataHolder)
 		{
-			_damageMitigationMultiplier = baseGroundMovingUnitDefinition.DamageReductionMultiplier;
+			_damageMitigationMultiplier = damageMitigationMultiplier;
 			_healthPointsDataHolder = healthPointsDataHolder;
 			_receivedDamageSubscription = receivedDamageDataHolder.Damage
 				.Subscribe(TakeDamage);

@@ -1,5 +1,4 @@
 using DataHolders;
-using Definitions.Units;
 using JetBrains.Annotations;
 using Zenject;
 
@@ -13,10 +12,10 @@ namespace Handlers.Enemy
 
 		public EnemyHealthRestoreOnSpawnHandler(
 			HealthPointsDataHolder healthPointsDataHolder,
-			IBaseGroundMovingUnitDefinition baseGroundMovingUnitDefinition)
+			float baseHealthPoints)
 		{
 			_healthPointsDataHolder = healthPointsDataHolder;
-			_baseHealthPoints = baseGroundMovingUnitDefinition.HealthPoints;
+			_baseHealthPoints = baseHealthPoints;
 		}
 
 		public void OnSpawned()
