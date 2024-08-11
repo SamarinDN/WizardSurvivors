@@ -1,4 +1,5 @@
 using DataHolders;
+using TMPro;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,19 +12,35 @@ namespace Gameplay.View.UI
 		[SerializeField]
 		private Slider slider;
 
+		[SerializeField]
+		private TMP_Text healthLabel;
+
 		private HealthPointsDataHolder _healthPointsDataHolder;
 
 		[Inject]
 		private void Constructor(HealthPointsDataHolder healthPointsDataHolder)
 		{
 			_healthPointsDataHolder = healthPointsDataHolder;
-			healthPointsDataHolder.CurrentHealth.Subscribe(OnNext);
+			healthPointsDataHolder.CurrentHealth.Subscribe(OnHealthChanged);
 		}
 
-		private void OnNext(float _)
+		private void OnHealthChanged(float currentHealth)
 		{
-			slider.normalizedValue =
-				_healthPointsDataHolder.CurrentHealth.Value / _healthPointsDataHolder.MaxHealth.Value;
+			if (_healthPointsDataHolder.MaxHealth.Value == 0)
+			{
+				slider.normalizedValue = 0;
+				healthLabel.text = "";
+				return;
+			}
+
+			if (currentHealth < 0)
+			{
+				currentHealth = 0;
+			}
+
+			var maxHealth = _healthPointsDataHolder.MaxHealth.Value;
+			slider.normalizedValue = currentHealth / maxHealth;
+			healthLabel.text = $"{currentHealth:0} / {maxHealth}";
 		}
 	}
 }
