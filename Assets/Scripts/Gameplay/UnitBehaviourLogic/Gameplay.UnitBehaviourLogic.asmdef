@@ -1,0 +1,19 @@
+{
+    "name": "Gameplay.UnitBehaviourLogic",
+    "rootNamespace": "",
+    "references": [
+        "GUID:455ee281b6fd405fb6e1bd33323504dc",
+        "GUID:3ebc030a91b4d4239bf4437502421b3e",
+        "GUID:642719f7a6cb47958897ba68dece8c95",
+        "GUID:560b04d1a97f54a4e82edc0cbbb69285"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

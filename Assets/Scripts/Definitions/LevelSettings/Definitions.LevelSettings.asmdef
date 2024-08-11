@@ -1,0 +1,16 @@
+{
+    "name": "Definitions.LevelSettings",
+    "rootNamespace": "",
+    "references": [
+        "GUID:3ebc030a91b4d4239bf4437502421b3e"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -1,0 +1,25 @@
+{
+    "name": "Services.EnemySpawnService",
+    "rootNamespace": "",
+    "references": [
+        "GUID:93333b37243e549c5b020011e0049d5c",
+        "GUID:0d8beb7f090555447a6cf5ce9e54dbb4",
+        "GUID:3ebc030a91b4d4239bf4437502421b3e",
+        "GUID:560b04d1a97f54a4e82edc0cbbb69285",
+        "GUID:45bfad6f97a54e19b9d7cfa1e7a6fc7b",
+        "GUID:455ee281b6fd405fb6e1bd33323504dc",
+        "GUID:e85ec6d78e7845a1a0f3e9bb590d514e",
+        "GUID:f3f5228ff1f04ed69141aa622cb828ea",
+        "GUID:f5e4878ff13d4b2e8a9da9dcd6d208b3",
+        "GUID:be2b0194a6204e01bfd7bf89fce4d68e"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
