@@ -63,9 +63,9 @@ namespace Services.EnemySpawnService
 			subContainer.BindInstance(enemy.HealthPoints)
 				.WhenInjectedInto<EnemyHealthRestoreOnSpawnHandler>();
 
-			subContainer.BindInterfacesAndSelfTo<EnemyTakeDamageHandler>().AsSingle().NonLazy();
+			subContainer.BindInterfacesAndSelfTo<TakeDamageHandler>().AsSingle().NonLazy();
 			subContainer.BindInstance(enemy.DamageReductionMultiplier)
-				.WhenInjectedInto<EnemyTakeDamageHandler>();
+				.WhenInjectedInto<TakeDamageHandler>();
 
 			subContainer.BindInterfacesAndSelfTo<EnemyDeathHandler>().AsSingle().NonLazy();
 

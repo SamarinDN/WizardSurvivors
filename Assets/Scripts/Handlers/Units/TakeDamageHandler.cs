@@ -3,17 +3,17 @@ using DataHolders;
 using JetBrains.Annotations;
 using UniRx;
 
-namespace Handlers.Player
+namespace Handlers.Units
 {
 	[UsedImplicitly]
-	public sealed class PlayerTakeDamageHandler : IDisposable
+	public sealed class TakeDamageHandler : IDisposable
 	{
 		private readonly IDisposable _receivedDamageSubscription;
 		private readonly ReceivedDamageDataHolder _receivedDamageDataHolder;
 		private readonly HealthPointsDataHolder _healthPointsDataHolder;
 		private readonly float _damageMitigationMultiplier;
 
-		public PlayerTakeDamageHandler(
+		public TakeDamageHandler(
 			float damageMitigationMultiplier,
 			ReceivedDamageDataHolder receivedDamageDataHolder,
 			HealthPointsDataHolder healthPointsDataHolder)
