@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4021581418052414296}
   - component: {fileID: 2179775396731276198}
+  - component: {fileID: 2471421887312435802}
   m_Layer: 0
   m_Name: PlayerView
   m_TagString: Untagged
@@ -45,6 +46,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72da72970fc44dac93314af5fd72dd53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2471421887312435802
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 252280603324638578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4922fd660ca349058213a72f20de31b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  meshRenderer: {fileID: 3145122338610670922}
 --- !u!1 &1099247805228245781
 GameObject:
   m_ObjectHideFlags: 0
@@ -191,3 +205,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57c115d2db374d1eb806732322362124, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  colliderComponent: {fileID: 4376453703420274404}

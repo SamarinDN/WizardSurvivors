@@ -18,4 +18,5 @@ MonoBehaviour:
   movementSpeed: 6
   rotationSpeed: 360
   damageReductionMultiplier: 1
+  secondsInvincibilityAfterGettingHit: 0.5
   damage: 10
